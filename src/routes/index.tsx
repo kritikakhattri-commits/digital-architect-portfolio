@@ -164,25 +164,27 @@ function Home() {
       <Nav />
 
       {/* HERO */}
-      <section className="relative min-h-screen pt-28 pb-16 md:pb-20">
+      <section className="relative pt-28 pb-16 sm:pt-32 md:min-h-screen md:pb-20">
         <div className="absolute inset-0 pointer-events-none bg-[linear-gradient(180deg,transparent_0%,oklch(0.97_0.003_260/0.72)_100%)]" />
-        <div className="relative mx-auto grid min-h-[calc(100vh-7rem)] w-full max-w-6xl items-center gap-12 px-6 lg:grid-cols-[1.08fr_0.92fr]">
-          <div>
+        <div className="relative mx-auto grid w-full max-w-6xl items-center gap-10 px-4 sm:px-6 md:min-h-[calc(100vh-7rem)] lg:grid-cols-[1.08fr_0.92fr]">
+          <div className="min-w-0">
             <motion.div
-              initial={{ opacity: 0, y: 16 }}
+              initial={false}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, ease: "easeOut" }}
-              className="mb-8 flex items-center gap-3 text-xs uppercase tracking-[0.22em] text-muted-foreground"
+              className="mb-6 flex items-start gap-3 text-[0.6rem] uppercase tracking-[0.12em] text-muted-foreground sm:mb-8 sm:items-center sm:text-xs sm:tracking-[0.22em]"
             >
               <span className="h-2 w-2 rounded-full bg-[oklch(0.65_0.19_250)] shadow-[0_0_0_4px_oklch(0.65_0.19_250/0.18)]" />
-              SAGAR SHARMA · CHIEF TECHNOLOGY OFFICER
+              <span className="min-w-0 leading-relaxed">
+                SAGAR SHARMA · CHIEF TECHNOLOGY OFFICER
+              </span>
             </motion.div>
 
             <motion.div
-              initial={{ opacity: 0, y: 28 }}
+              initial={false}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.9, delay: 0.08, ease: "easeOut" }}
-              className="mb-6 font-display text-[4.5rem] leading-[0.9] tracking-normal text-foreground sm:text-[6rem] md:text-[7.5rem] lg:text-[8.8rem]"
+              className="mb-5 font-display text-[clamp(2.35rem,13vw,8.8rem)] leading-[0.9] tracking-normal text-foreground sm:mb-6"
             >
               Sagar
               <br />
@@ -190,50 +192,77 @@ function Home() {
             </motion.div>
 
             <motion.h1
-              initial={{ opacity: 0, y: 24 }}
+              initial={false}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 1, delay: 0.18, ease: "easeOut" }}
-              className="font-display max-w-3xl text-balance text-3xl font-semibold leading-[1.08] tracking-normal sm:text-4xl md:text-5xl"
+              className="font-display max-w-3xl text-balance text-[clamp(1.45rem,6.8vw,3rem)] font-semibold leading-[1.08] tracking-normal md:text-5xl"
             >
-              Building Future-Ready Technology Systems
+              <span className="block sm:hidden">
+                Building
+                <br />
+                Future-Ready
+                <br />
+                Technology
+                <br />
+                Systems
+              </span>
+              <span className="hidden sm:inline">Building Future-Ready Technology Systems</span>
             </motion.h1>
 
             <motion.p
-              initial={{ opacity: 0, y: 24 }}
+              initial={false}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 1, delay: 0.3 }}
-              className="mt-6 max-w-2xl text-lg leading-relaxed text-muted-foreground md:text-xl"
+              className="mt-5 max-w-2xl text-base leading-relaxed text-muted-foreground sm:text-lg md:mt-6 md:text-xl"
             >
-              AI, cloud infrastructure, cybersecurity, and scalable digital architecture for modern
-              enterprises.
+              <span className="block sm:hidden">
+                AI, cloud infrastructure, cybersecurity,
+                <br />
+                and scalable digital architecture
+                <br />
+                for modern enterprises.
+              </span>
+              <span className="hidden sm:inline">
+                AI, cloud infrastructure, cybersecurity, and scalable digital architecture for
+                modern enterprises.
+              </span>
             </motion.p>
 
             <motion.p
-              initial={{ opacity: 0, y: 20 }}
+              initial={false}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, delay: 0.42 }}
-              className="mt-5 max-w-xl border-l border-border pl-5 text-sm leading-relaxed text-foreground/72"
+              className="mt-5 max-w-xl border-l border-border pl-4 text-sm leading-relaxed text-foreground/72 sm:pl-5"
             >
-              Currently serving as CTO at SR18 Group, leading technology strategy across multiple
-              business verticals.
+              <span className="block sm:hidden">
+                Currently serving as CTO at SR18 Group,
+                <br />
+                leading technology strategy across
+                <br />
+                multiple business verticals.
+              </span>
+              <span className="hidden sm:inline">
+                Currently serving as CTO at SR18 Group, leading technology strategy across multiple
+                business verticals.
+              </span>
             </motion.p>
 
             <motion.div
-              initial={{ opacity: 0, y: 24 }}
+              initial={false}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 1, delay: 0.52 }}
-              className="mt-10 flex flex-wrap gap-3"
+              className="mt-8 flex w-full max-w-[calc(100vw-2rem)] flex-col gap-3 sm:max-w-none sm:flex-row sm:flex-wrap md:mt-10"
             >
               <a
                 href="#journey"
-                className="group inline-flex items-center gap-2 rounded-full bg-foreground px-6 py-3 text-sm font-medium text-background transition hover:-translate-y-0.5 hover:shadow-[0_14px_30px_oklch(0.18_0.01_260/0.14)]"
+                className="group inline-flex min-h-11 w-full items-center justify-center gap-2 rounded-full bg-foreground px-6 py-3 text-sm font-medium text-background transition hover:-translate-y-0.5 hover:shadow-[0_14px_30px_oklch(0.18_0.01_260/0.14)] sm:w-auto"
               >
                 Explore Profile
                 <ArrowUpRight className="h-4 w-4 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
               </a>
               <a
                 href="#vision"
-                className="inline-flex items-center gap-2 rounded-full border border-border bg-background/80 px-6 py-3 text-sm font-medium transition hover:-translate-y-0.5 hover:bg-muted hover:shadow-[0_14px_30px_oklch(0.18_0.01_260/0.08)]"
+                className="inline-flex min-h-11 w-full items-center justify-center gap-2 whitespace-normal rounded-full border border-border bg-background/80 px-4 py-3 text-center text-xs font-medium leading-tight transition hover:-translate-y-0.5 hover:bg-muted hover:shadow-[0_14px_30px_oklch(0.18_0.01_260/0.08)] sm:w-auto sm:px-6 sm:text-sm"
               >
                 View Technology Vision
               </a>
@@ -246,8 +275,8 @@ function Home() {
 
       {/* METRICS */}
       <section className="border-y border-border bg-secondary/40">
-        <div className="mx-auto max-w-6xl px-6 py-16 md:py-20">
-          <div className="grid grid-cols-2 md:grid-cols-5 gap-y-10 gap-x-6">
+        <div className="mx-auto max-w-6xl px-4 py-12 sm:px-6 sm:py-16 md:py-20">
+          <div className="grid grid-cols-2 gap-x-4 gap-y-8 sm:gap-x-6 md:grid-cols-5 md:gap-y-10">
             {metrics.map((m, i) => (
               <motion.div
                 key={m.label}
@@ -257,10 +286,10 @@ function Home() {
                 transition={{ duration: 0.6, delay: i * 0.07 }}
                 className="text-center md:text-left"
               >
-                <div className="font-display text-4xl md:text-5xl">
+                <div className="font-display text-3xl sm:text-4xl md:text-5xl">
                   <Counter to={m.value} suffix={m.suffix} />
                 </div>
-                <div className="mt-2 text-xs md:text-sm text-muted-foreground tracking-wide">
+                <div className="mt-2 text-xs leading-snug tracking-wide text-muted-foreground md:text-sm">
                   {m.label}
                 </div>
               </motion.div>
@@ -270,15 +299,15 @@ function Home() {
       </section>
 
       {/* LEADERSHIP FRAMEWORK */}
-      <section className="relative overflow-hidden border-y border-border bg-white py-20 md:min-h-screen md:py-24">
-        <div className="mx-auto flex min-h-[calc(100vh-10rem)] max-w-6xl flex-col justify-center px-6">
+      <section className="relative overflow-hidden border-y border-border bg-white py-20 sm:py-24 md:min-h-screen">
+        <div className="mx-auto flex max-w-6xl flex-col justify-center px-4 sm:px-6 md:min-h-[calc(100vh-10rem)]">
           <div className="mx-auto max-w-3xl text-center">
             <motion.div
               initial={{ opacity: 0, y: 18 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, margin: "-120px" }}
               transition={{ duration: 0.8, ease: "easeOut" }}
-              className="mb-5 text-xs uppercase tracking-[0.24em] text-muted-foreground"
+              className="mb-5 text-[0.68rem] uppercase tracking-[0.18em] text-muted-foreground sm:text-xs sm:tracking-[0.24em]"
             >
               Leadership Framework
             </motion.div>
@@ -288,7 +317,7 @@ function Home() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, margin: "-120px" }}
               transition={{ duration: 1, delay: 0.08, ease: "easeOut" }}
-              className="font-display text-balance text-4xl font-semibold leading-[1.04] tracking-normal text-foreground sm:text-5xl md:text-6xl"
+              className="font-display text-balance text-[clamp(2.35rem,11vw,3.75rem)] font-semibold leading-[1.04] tracking-normal text-foreground md:text-6xl"
             >
               How I Evaluate Every Technology Decision
             </motion.h2>
@@ -304,13 +333,13 @@ function Home() {
             </motion.p>
           </div>
 
-          <div className="mt-12 grid items-center gap-10 md:mt-16 md:grid-cols-[0.64fr_0.36fr] md:gap-14">
+          <div className="mt-10 grid items-center gap-8 md:mt-16 md:grid-cols-[0.64fr_0.36fr] md:gap-14">
             <motion.div
               initial={{ opacity: 0, y: 28 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, margin: "-120px" }}
               transition={{ duration: 0.9, delay: 0.16, ease: "easeOut" }}
-              className="relative mx-auto aspect-[1.16/1] w-full max-w-3xl"
+              className="relative mx-auto hidden aspect-[1.16/1] w-full max-w-3xl md:block"
             >
               <svg
                 className="absolute inset-0 h-full w-full overflow-visible"
@@ -406,12 +435,53 @@ function Home() {
               ))}
             </motion.div>
 
+            <div className="grid gap-3 md:hidden">
+              {leadershipFramework.map((principle) => {
+                const isActive = activeFramework === principle.title;
+
+                return (
+                  <button
+                    key={`card-${principle.title}`}
+                    type="button"
+                    onClick={() => setActiveFramework(principle.title)}
+                    onFocus={() => setActiveFramework(principle.title)}
+                    className={`min-h-16 rounded-[8px] border p-4 text-left transition ${
+                      isActive
+                        ? "border-foreground bg-white shadow-[0_14px_34px_oklch(0.18_0.01_260/0.08)]"
+                        : "border-border bg-white/72 text-foreground/70"
+                    }`}
+                  >
+                    <div className="flex items-center justify-between gap-4">
+                      <span className="text-base font-semibold text-foreground">
+                        {principle.title}
+                      </span>
+                      <span
+                        className={`h-2.5 w-2.5 shrink-0 rounded-full ${
+                          isActive ? "bg-[oklch(0.65_0.19_250)]" : "bg-foreground/24"
+                        }`}
+                      />
+                    </div>
+                    {isActive && (
+                      <motion.p
+                        initial={{ opacity: 0, y: 6 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ duration: 0.2, ease: "easeOut" }}
+                        className="mt-3 border-t border-border pt-3 text-sm leading-relaxed text-muted-foreground"
+                      >
+                        {principle.body}
+                      </motion.p>
+                    )}
+                  </button>
+                );
+              })}
+            </div>
+
             <motion.div
               key={activePrinciple.title}
               initial={{ opacity: 0, y: 16 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.35, ease: "easeOut" }}
-              className="mx-auto max-w-xl text-center md:text-left"
+              className="mx-auto hidden max-w-xl text-center md:block md:text-left"
             >
               <div className="mb-5 h-px w-20 bg-foreground/70 max-md:mx-auto" />
               <h3 className="font-display text-3xl font-semibold tracking-normal text-foreground md:text-5xl">
@@ -423,13 +493,13 @@ function Home() {
             </motion.div>
           </div>
 
-          <div className="mt-12 grid grid-cols-3 border-t border-border pt-5 text-center text-[0.62rem] uppercase tracking-[0.18em] text-muted-foreground md:mt-10">
+          <div className="mt-8 grid grid-cols-3 border-t border-border pt-5 text-center text-[0.62rem] uppercase tracking-[0.18em] text-muted-foreground md:mt-10">
             {leadershipFramework.map((principle) => (
               <button
                 key={`mobile-${principle.title}`}
                 type="button"
                 onClick={() => setActiveFramework(principle.title)}
-                className={`px-2 py-2 transition-colors md:hidden ${
+                className={`min-h-11 px-2 py-2 transition-colors md:hidden ${
                   activeFramework === principle.title ? "text-foreground" : "text-muted-foreground"
                 }`}
               >
@@ -454,8 +524,8 @@ function Home() {
       </Section>
 
       {/* SYSTEMS ARCHITECTED */}
-      <section id="systems" className="border-y border-border bg-white py-24 md:py-32">
-        <div className="mx-auto max-w-6xl px-6">
+      <section id="systems" className="border-y border-border bg-white py-20 sm:py-24 md:py-32">
+        <div className="mx-auto max-w-6xl px-4 sm:px-6">
           <motion.div
             initial={{ opacity: 0, y: 22 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -466,15 +536,15 @@ function Home() {
             <div className="text-xs uppercase tracking-[0.24em] text-muted-foreground">
               Systems I've Architected
             </div>
-            <h2 className="font-display mt-6 text-balance text-4xl font-semibold leading-[1.04] tracking-normal text-foreground sm:text-5xl md:text-6xl">
+            <h2 className="font-display mt-5 text-balance text-[clamp(2.35rem,11vw,3.75rem)] font-semibold leading-[1.04] tracking-normal text-foreground md:mt-6 md:text-6xl">
               Flagship Projects
             </h2>
-            <p className="mt-6 max-w-2xl text-base leading-relaxed text-muted-foreground md:text-lg">
+            <p className="mt-5 max-w-2xl text-base leading-relaxed text-muted-foreground md:mt-6 md:text-lg">
               Systems built across platforms, cloud infrastructure, and automation.
             </p>
           </motion.div>
 
-          <div className="mt-14 border-t border-foreground/18 md:mt-16">
+          <div className="mt-10 border-t border-foreground/18 md:mt-16">
             {architectedSystems.map((system, i) => (
               <motion.article
                 key={system.name}
@@ -482,12 +552,12 @@ function Home() {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ amount: 0.44, margin: "-10% 0px -14% 0px" }}
                 transition={{ duration: 0.65, delay: i * 0.04, ease: "easeOut" }}
-                className="group grid gap-8 border-b border-foreground/14 py-10 transition-opacity duration-500 md:grid-cols-[0.95fr_0.8fr_0.85fr] md:gap-10 md:py-14 lg:grid-cols-[1.08fr_0.86fr_0.92fr] lg:gap-14"
+                className="group grid gap-7 border-b border-foreground/14 py-8 transition-opacity duration-500 md:grid-cols-[0.95fr_0.8fr_0.85fr] md:gap-10 md:py-14 lg:grid-cols-[1.08fr_0.86fr_0.92fr] lg:gap-14"
               >
-                <div className="grid gap-5 sm:grid-cols-[4rem_1fr] md:block">
+                <div className="grid gap-4 sm:grid-cols-[4rem_1fr] md:block">
                   <div className="text-sm tabular-nums text-muted-foreground">0{i + 1}</div>
                   <div>
-                    <h3 className="font-display text-2xl font-semibold leading-tight tracking-normal text-foreground md:mt-8 md:text-4xl">
+                    <h3 className="font-display text-2xl font-semibold leading-tight tracking-normal text-foreground sm:text-3xl md:mt-8 md:text-4xl">
                       {system.name}
                     </h3>
                     <div className="mt-4 text-xs uppercase tracking-[0.18em] text-foreground/56">
@@ -503,14 +573,14 @@ function Home() {
                   <p className="text-foreground/78">{system.architecture}</p>
                 </div>
 
-                <div className="flex gap-6 text-sm leading-relaxed md:pt-12 md:text-base">
+                <div className="flex gap-4 text-sm leading-relaxed md:gap-6 md:pt-12 md:text-base">
                   <div>
                     <div className="mb-3 text-[0.65rem] uppercase tracking-[0.18em] text-muted-foreground">
                       Outcome
                     </div>
                     <p className="text-foreground/78">{system.outcome}</p>
                   </div>
-                  <ArrowUpRight className="mt-8 h-5 w-5 shrink-0 text-foreground/34 transition duration-300 group-hover:-translate-y-0.5 group-hover:translate-x-0.5 group-hover:text-foreground md:mt-9" />
+                  <ArrowUpRight className="mt-8 hidden h-5 w-5 shrink-0 text-foreground/34 transition duration-300 group-hover:-translate-y-0.5 group-hover:translate-x-0.5 group-hover:text-foreground sm:block md:mt-9" />
                 </div>
               </motion.article>
             ))}
@@ -545,7 +615,7 @@ function Home() {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true, amount: 0.38, margin: "-8% 0px -12% 0px" }}
                 transition={{ duration: 0.72, delay: i * 0.06, ease: "easeOut" }}
-                className="grid gap-8 border-b border-foreground/14 py-10 md:grid-cols-[9rem_1fr] md:gap-12 md:py-14 lg:grid-cols-[11rem_1fr]"
+                className="grid gap-6 border-b border-foreground/14 py-8 md:grid-cols-[9rem_1fr] md:gap-12 md:py-14 lg:grid-cols-[11rem_1fr]"
               >
                 <div className="relative flex items-start gap-5 md:block">
                   <div className="relative z-10 grid h-16 w-16 shrink-0 place-items-center rounded-full border border-foreground/18 bg-white text-sm tabular-nums text-foreground md:h-20 md:w-20 md:text-base">
@@ -558,7 +628,7 @@ function Home() {
 
                 <div className="grid gap-7 md:grid-cols-[0.9fr_1.1fr] md:gap-12 lg:gap-16">
                   <div>
-                    <h3 className="font-display text-balance text-3xl font-semibold leading-[1.05] tracking-normal text-foreground md:text-5xl">
+                    <h3 className="font-display text-balance text-[clamp(2rem,9vw,3rem)] font-semibold leading-[1.05] tracking-normal text-foreground md:text-5xl">
                       {stage.stage}
                     </h3>
                     <div className="mt-6 text-xs uppercase tracking-[0.18em] text-muted-foreground">
@@ -577,7 +647,7 @@ function Home() {
                         {stage.org}
                       </div>
                     )}
-                    <p className="mt-6 text-base leading-relaxed text-foreground/76 md:text-lg">
+                    <p className="mt-5 text-base leading-relaxed text-foreground/76 md:mt-6 md:text-lg">
                       {stage.description}
                     </p>
                   </div>
@@ -595,17 +665,17 @@ function Home() {
         title={<>Engineering the next generation of intelligent enterprises.</>}
         className="bg-white"
       >
-        <div className="grid items-start gap-14 lg:grid-cols-[0.58fr_0.42fr] lg:gap-20">
+        <div className="grid items-start gap-10 md:gap-14 lg:grid-cols-[0.58fr_0.42fr] lg:gap-20">
           <div>
             <motion.div
               initial={{ opacity: 0, y: 18 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, margin: "-80px" }}
               transition={{ duration: 0.7, ease: "easeOut" }}
-              className="mb-8 flex items-center justify-between gap-6 border-b border-foreground/14 pb-5"
+              className="mb-6 flex items-center justify-between gap-6 border-b border-foreground/14 pb-5 md:mb-8"
             >
               <div>
-                <div className="text-xs uppercase tracking-[0.22em] text-muted-foreground">
+                <div className="text-[0.68rem] uppercase tracking-[0.18em] text-muted-foreground sm:text-xs sm:tracking-[0.22em]">
                   Blueprint
                 </div>
                 <h3 className="mt-3 text-2xl font-semibold tracking-normal text-foreground md:text-3xl">
@@ -618,7 +688,7 @@ function Home() {
             </motion.div>
 
             <div className="relative mx-auto max-w-3xl">
-              <div className="space-y-3">
+              <div className="space-y-2.5 md:space-y-3">
                 {futureEnterpriseStack.map((layer, i) => {
                   const isActive = activeFutureLayer === layer.layer;
                   const width = 58 + (futureEnterpriseStack.length - i - 1) * 9;
@@ -638,7 +708,7 @@ function Home() {
                       onMouseEnter={() => setActiveFutureLayer(layer.layer)}
                       onFocus={() => setActiveFutureLayer(layer.layer)}
                       onClick={() => setActiveFutureLayer(layer.layer)}
-                      className={`relative mx-auto flex min-h-16 w-full items-center justify-between border-y px-5 py-4 text-left transition duration-300 md:px-7 ${
+                      className={`relative mx-auto flex min-h-16 w-full items-center justify-between gap-4 border-y px-4 py-4 text-left transition duration-300 max-md:!max-w-full md:px-7 ${
                         isActive
                           ? "border-foreground text-foreground opacity-100"
                           : "border-foreground/16 text-foreground/62 opacity-70 hover:border-foreground/45 hover:text-foreground hover:opacity-100"
@@ -648,7 +718,7 @@ function Home() {
                       <span className="text-xs tabular-nums text-muted-foreground">
                         {String(i + 1).padStart(2, "0")}
                       </span>
-                      <span className="text-lg font-semibold tracking-normal md:text-2xl">
+                      <span className="text-right text-base font-semibold tracking-normal sm:text-lg md:text-2xl">
                         {layer.layer}
                       </span>
                     </motion.button>
@@ -668,10 +738,10 @@ function Home() {
             <div className="text-xs uppercase tracking-[0.22em] text-muted-foreground">
               Vision 2030
             </div>
-            <p className="mt-5 text-xl font-medium leading-snug text-foreground md:text-2xl">
+            <p className="mt-5 text-lg font-medium leading-snug text-foreground sm:text-xl md:text-2xl">
               Building intelligent, secure, and borderless technology ecosystems that connect UAE,
-              India, and global markets through AI, automation, cloud infrastructure,
-              cybersecurity, and enterprise innovation.
+              India, and global markets through AI, automation, cloud infrastructure, cybersecurity,
+              and enterprise innovation.
             </p>
 
             <motion.div
@@ -679,7 +749,7 @@ function Home() {
               initial={{ opacity: 0, y: 10 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.32, ease: "easeOut" }}
-              className="mt-10 border-t border-foreground/14 pt-7"
+              className="mt-8 border-t border-foreground/14 pt-6 md:mt-10 md:pt-7"
             >
               <div className="text-lg font-semibold tracking-normal text-foreground">
                 {selectedFutureLayer.layer}
@@ -693,14 +763,14 @@ function Home() {
       </Section>
 
       {/* CONTACT */}
-      <section id="contact" className="relative py-32 md:py-44 border-t border-border">
-        <div className="mx-auto max-w-5xl px-6 text-center">
+      <section id="contact" className="relative border-t border-border py-24 sm:py-32 md:py-44">
+        <div className="mx-auto max-w-5xl px-4 text-center sm:px-6">
           <motion.h2
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.8 }}
-            className="font-display text-5xl md:text-7xl leading-[1.05] text-balance"
+            className="font-display text-balance text-[clamp(2.65rem,13vw,4.5rem)] leading-[1.05] md:text-7xl"
           >
             Let's build the <span className="italic text-[oklch(0.45_0.12_250)]">future</span>{" "}
             together.
@@ -711,11 +781,11 @@ function Home() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.7, delay: 0.2 }}
-            className="mt-12 flex flex-col sm:flex-row items-center justify-center gap-3"
+            className="mt-10 flex flex-col items-stretch justify-center gap-3 sm:mt-12 sm:flex-row sm:items-center"
           >
             <a
               href="mailto:sagar.sharma@sr18group.com"
-              className="group inline-flex items-center gap-2 rounded-full bg-foreground text-background px-6 py-3 text-sm font-medium hover:opacity-90 transition"
+              className="group inline-flex min-h-11 items-center justify-center gap-2 rounded-full bg-foreground px-5 py-3 text-sm font-medium text-background transition hover:opacity-90 sm:px-6"
             >
               <Mail className="w-4 h-4" />
               sagar.sharma@sr18group.com
@@ -724,7 +794,7 @@ function Home() {
               href="https://www.sr18group.com"
               target="_blank"
               rel="noreferrer"
-              className="inline-flex items-center gap-2 rounded-full hairline bg-background px-6 py-3 text-sm font-medium hover:bg-muted transition"
+              className="hairline inline-flex min-h-11 items-center justify-center gap-2 rounded-full bg-background px-5 py-3 text-sm font-medium transition hover:bg-muted sm:px-6"
             >
               <Globe className="w-4 h-4" />
               www.sr18group.com
@@ -734,7 +804,7 @@ function Home() {
       </section>
 
       <footer className="border-t border-border">
-        <div className="mx-auto max-w-6xl px-6 py-10 flex flex-col md:flex-row items-center justify-between gap-4 text-xs text-muted-foreground">
+        <div className="mx-auto flex max-w-6xl flex-col items-center justify-between gap-3 px-4 py-8 text-center text-xs text-muted-foreground sm:px-6 md:flex-row md:gap-4 md:py-10 md:text-left">
           <div>Sagar Sharma — CTO, SR18 Universe</div>
           <div>© {new Date().getFullYear()} · Dubai, UAE</div>
         </div>

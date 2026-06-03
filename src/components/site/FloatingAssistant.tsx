@@ -17,8 +17,7 @@ const knowledgeBase = {
   name: "Sagar Sharma",
   title: "Chief Technology Officer, SR18 Group",
   location: "Dubai, UAE",
-  headline:
-    "Technology Leader | AI & Cloud Architect | Building Future-Ready Digital Ecosystems",
+  headline: "Technology Leader | AI & Cloud Architect | Building Future-Ready Digital Ecosystems",
   bio: "Sagar Sharma is an experienced technology strategist with 10+ years in software engineering, cloud architecture, cybersecurity, and scalable digital infrastructure. He began as a developer in India, building backend systems and solving complex technical problems. His work expanded into AI, automation, enterprise architecture, and digital transformation.",
   mission:
     "To build technology that does not just work, but evolves, adapts, and leads industries into the future.",
@@ -36,8 +35,7 @@ const knowledgeBase = {
     "Head of Engineering, TechSol India Pvt Ltd, 2019-2023",
     "Senior Software Engineer, CodeSphere Technologies, 2016-2019",
   ],
-  education:
-    "B.Tech in Computer Science Engineering, Delhi Technological University, 2012-2016",
+  education: "B.Tech in Computer Science Engineering, Delhi Technological University, 2012-2016",
   certifications: [
     "AWS Certified Solutions Architect",
     "Google Cloud Professional Architect",
@@ -141,7 +139,7 @@ export function FloatingAssistant() {
   }
 
   return (
-    <div className="fixed bottom-5 right-5 z-50 md:bottom-7 md:right-7">
+    <div className="fixed bottom-4 right-4 z-50 sm:bottom-5 sm:right-5 md:bottom-7 md:right-7">
       <AnimatePresence>
         {isOpen && (
           <motion.div
@@ -149,12 +147,12 @@ export function FloatingAssistant() {
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: 14, scale: 0.98 }}
             transition={{ duration: 0.24, ease: "easeOut" }}
-            className="absolute bottom-16 right-0 w-[calc(100vw-2.5rem)] max-w-xl overflow-hidden rounded-3xl border border-foreground/14 bg-white shadow-[0_24px_80px_oklch(0.18_0.01_260/0.16)]"
+            className="fixed inset-x-3 bottom-20 max-h-[calc(100dvh-6.5rem)] overflow-hidden rounded-[8px] border border-foreground/14 bg-white shadow-[0_24px_80px_oklch(0.18_0.01_260/0.16)] sm:absolute sm:inset-x-auto sm:bottom-16 sm:right-0 sm:w-[min(36rem,calc(100vw-2.5rem))] sm:max-w-xl"
           >
-            <div className="border-b border-border px-5 py-5 md:px-6">
+            <div className="border-b border-border px-4 py-4 sm:px-5 sm:py-5 md:px-6">
               <div className="flex items-start justify-between gap-5">
                 <div>
-                  <div className="text-lg font-semibold tracking-normal text-foreground">
+                  <div className="text-base font-semibold tracking-normal text-foreground sm:text-lg">
                     Ask Sagar's Assistant
                   </div>
                   <p className="mt-2 max-w-md text-sm leading-relaxed text-muted-foreground">
@@ -165,7 +163,7 @@ export function FloatingAssistant() {
                 <button
                   type="button"
                   onClick={() => setIsOpen(false)}
-                  className="grid h-9 w-9 shrink-0 place-items-center rounded-full border border-border text-muted-foreground transition hover:border-foreground/30 hover:text-foreground"
+                  className="grid h-11 w-11 shrink-0 place-items-center rounded-full border border-border text-muted-foreground transition hover:border-foreground/30 hover:text-foreground"
                   aria-label="Close assistant"
                 >
                   <X className="h-4 w-4" />
@@ -173,14 +171,14 @@ export function FloatingAssistant() {
               </div>
             </div>
 
-            <div className="max-h-[min(680px,calc(100vh-9rem))] overflow-y-auto px-5 py-5 md:px-6">
+            <div className="max-h-[calc(100dvh-13rem)] overflow-y-auto overscroll-contain px-4 py-4 sm:max-h-[min(680px,calc(100vh-9rem))] sm:px-5 sm:py-5 md:px-6">
               <div className="flex flex-wrap gap-2">
                 {suggestedQuestions.map((item) => (
                   <button
                     key={item}
                     type="button"
                     onClick={() => ask(item)}
-                    className={`rounded-full border px-3.5 py-2 text-xs transition ${
+                    className={`min-h-10 rounded-full border px-3.5 py-2 text-xs transition sm:min-h-0 ${
                       activeQuestion === item
                         ? "border-foreground bg-foreground text-background"
                         : "border-border text-muted-foreground hover:border-foreground/35 hover:text-foreground"
@@ -215,7 +213,7 @@ export function FloatingAssistant() {
                   value={question}
                   onChange={(event) => setQuestion(event.target.value)}
                   placeholder="Ask about Sagar's profile, work, or vision"
-                  className="min-w-0 flex-1 rounded-full border border-border bg-white px-4 py-3 text-sm text-foreground outline-none transition placeholder:text-muted-foreground focus:border-foreground/45"
+                  className="min-h-11 min-w-0 flex-1 rounded-full border border-border bg-white px-4 py-3 text-base text-foreground outline-none transition placeholder:text-muted-foreground focus:border-foreground/45 sm:text-sm"
                 />
                 <button
                   type="submit"
@@ -234,7 +232,7 @@ export function FloatingAssistant() {
         type="button"
         onClick={() => setIsOpen((current) => !current)}
         whileTap={{ scale: 0.98 }}
-        className="rounded-full border border-foreground bg-foreground px-5 py-3 text-sm font-medium text-background shadow-[0_16px_42px_oklch(0.18_0.01_260/0.18)] transition hover:-translate-y-0.5 hover:shadow-[0_22px_54px_oklch(0.18_0.01_260/0.22)]"
+        className="min-h-11 rounded-full border border-foreground bg-foreground px-5 py-3 text-sm font-medium text-background shadow-[0_16px_42px_oklch(0.18_0.01_260/0.18)] transition hover:-translate-y-0.5 hover:shadow-[0_22px_54px_oklch(0.18_0.01_260/0.22)]"
         aria-expanded={isOpen}
       >
         Ask the CTO

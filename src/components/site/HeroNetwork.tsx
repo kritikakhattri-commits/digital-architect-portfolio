@@ -15,16 +15,16 @@ const nodes = [
 export function HeroNetwork() {
   return (
     <motion.div
-      initial={{ opacity: 0, y: 28, rotate: -1 }}
+      initial={false}
       animate={{ opacity: 1, y: 0, rotate: 0 }}
       transition={{ duration: 1, delay: 0.25, ease: "easeOut" }}
       whileHover={{ y: -8, rotate: 0.4 }}
-      className="relative h-[430px] sm:h-[520px] overflow-hidden rounded-[8px] border border-border bg-white shadow-[0_32px_80px_oklch(0.18_0.01_260/0.10)]"
+      className="relative h-[360px] w-full max-w-[calc(100vw-2rem)] overflow-hidden rounded-[8px] border border-border bg-white shadow-[0_32px_80px_oklch(0.18_0.01_260/0.10)] sm:h-[460px] sm:max-w-full lg:h-[520px]"
     >
       <div className="absolute inset-0 bg-[linear-gradient(oklch(0.18_0.01_260/0.055)_1px,transparent_1px),linear-gradient(90deg,oklch(0.18_0.01_260/0.055)_1px,transparent_1px)] bg-[size:28px_28px]" />
       <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-[oklch(0.65_0.19_250/0.5)] to-transparent" />
 
-      <div className="absolute left-7 top-7 right-7 flex items-center justify-between text-[10px] uppercase tracking-[0.22em] text-muted-foreground">
+      <div className="absolute left-4 right-4 top-5 flex items-center justify-between gap-4 text-[9px] uppercase tracking-[0.16em] text-muted-foreground sm:left-7 sm:right-7 sm:top-7 sm:text-[10px] sm:tracking-[0.22em]">
         <span>Architecture Map</span>
         <span>UAE to India</span>
       </div>
@@ -93,18 +93,18 @@ export function HeroNetwork() {
       </svg>
 
       <motion.div
-        initial={{ opacity: 0, y: 18 }}
+        initial={false}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.8, delay: 0.65 }}
-        className="absolute left-8 right-8 bottom-8 rounded-[8px] border border-border bg-background/90 p-5 shadow-[0_20px_50px_oklch(0.18_0.01_260/0.08)] backdrop-blur"
+        className="absolute bottom-4 left-4 right-4 rounded-[8px] border border-border bg-background/90 p-4 shadow-[0_20px_50px_oklch(0.18_0.01_260/0.08)] backdrop-blur sm:bottom-8 sm:left-8 sm:right-8 sm:p-5"
       >
-        <div className="mb-5 flex items-center justify-between">
-          <div className="font-display text-3xl leading-none">SS</div>
-          <div className="text-[10px] uppercase tracking-[0.18em] text-muted-foreground">
+        <div className="mb-4 flex items-center justify-between sm:mb-5">
+          <div className="font-display text-2xl leading-none sm:text-3xl">SS</div>
+          <div className="text-[9px] uppercase tracking-[0.16em] text-muted-foreground sm:text-[10px] sm:tracking-[0.18em]">
             Secure scale
           </div>
         </div>
-        <div className="grid grid-cols-3 gap-3">
+        <div className="grid grid-cols-2 gap-2 sm:grid-cols-3 sm:gap-3">
           {[
             { label: "AI", icon: Brain },
             { label: "Cloud", icon: Cloud },
@@ -112,19 +112,27 @@ export function HeroNetwork() {
           ].map((item) => {
             const Icon = item.icon;
             return (
-              <div key={item.label} className="rounded-[8px] border border-border bg-white p-3">
-                <Icon className="mb-3 h-4 w-4 text-[oklch(0.45_0.12_250)]" strokeWidth={1.6} />
-                <div className="text-xs font-medium">{item.label}</div>
+              <div
+                key={item.label}
+                className="rounded-[8px] border border-border bg-white p-2.5 sm:p-3"
+              >
+                <Icon
+                  className="mb-2 h-4 w-4 text-[oklch(0.45_0.12_250)] sm:mb-3"
+                  strokeWidth={1.6}
+                />
+                <div className="text-xs font-medium leading-none">{item.label}</div>
               </div>
             );
           })}
         </div>
       </motion.div>
 
-      <div className="absolute left-8 top-1/2 -translate-y-1/2 text-xs font-medium text-foreground">
+      <div className="absolute left-5 top-1/2 -translate-y-1/2 text-xs font-medium text-foreground sm:left-8">
         UAE
       </div>
-      <div className="absolute right-8 top-[38%] text-xs font-medium text-foreground">India</div>
+      <div className="absolute right-5 top-[38%] text-xs font-medium text-foreground sm:right-8">
+        India
+      </div>
     </motion.div>
   );
 }
