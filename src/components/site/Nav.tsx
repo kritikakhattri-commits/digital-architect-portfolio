@@ -1,16 +1,9 @@
 import { AnimatePresence, motion } from "framer-motion";
 import { Menu, X } from "lucide-react";
 import { useEffect, useState } from "react";
+import type { SiteContent } from "@/data/siteContent";
 
-const links = [
-  { href: "#ecosystem", label: "Ecosystem" },
-  { href: "#vision", label: "Technology" },
-  { href: "#systems", label: "Projects" },
-  { href: "#journey", label: "Journey" },
-  { href: "#contact", label: "Contact" },
-];
-
-export function Nav() {
+export function Nav({ content }: { content: SiteContent["header"] }) {
   const [isOpen, setIsOpen] = useState(false);
 
   useEffect(() => {
@@ -39,23 +32,23 @@ export function Nav() {
         <div className="glass rounded-full flex min-h-16 items-center justify-between gap-3 px-4 py-2 sm:px-5 sm:py-3">
           <a href="#top" onClick={closeMenu} className="flex min-h-11 min-w-0 items-center gap-2">
             <div className="grid h-8 w-8 shrink-0 place-items-center rounded-full bg-foreground text-[11px] font-medium tracking-wider text-background">
-              SS
+              {content.logoInitials}
             </div>
-            <span className="truncate text-sm font-medium tracking-tight">Sagar Sharma</span>
+            <span className="truncate text-sm font-medium tracking-tight">{content.name}</span>
           </a>
           <nav className="hidden md:flex items-center gap-7 text-sm text-muted-foreground">
-            {links.map((l) => (
+            {content.links.map((l) => (
               <a key={l.href} href={l.href} className="hover:text-foreground transition-colors">
                 {l.label}
               </a>
             ))}
           </nav>
           <a
-            href="#contact"
+            href={content.ctaLink}
             onClick={closeMenu}
             className="hidden min-h-11 items-center rounded-full bg-foreground px-4 text-xs font-medium text-background transition-colors hover:bg-charcoal sm:inline-flex md:text-sm"
           >
-            Get in touch
+            {content.ctaText}
           </a>
           <button
             type="button"
@@ -80,7 +73,7 @@ export function Nav() {
               className="glass mt-3 overflow-hidden rounded-[8px] p-2 md:hidden"
             >
               <nav className="grid gap-1 text-sm">
-                {links.map((l) => (
+                {content.links.map((l) => (
                   <a
                     key={l.href}
                     href={l.href}
@@ -91,11 +84,11 @@ export function Nav() {
                   </a>
                 ))}
                 <a
-                  href="#contact"
+                  href={content.ctaLink}
                   onClick={closeMenu}
                   className="mt-1 flex min-h-11 items-center justify-center rounded-full bg-foreground px-4 text-sm font-medium text-background"
                 >
-                  Get in touch
+                  {content.ctaText}
                 </a>
               </nav>
             </motion.div>

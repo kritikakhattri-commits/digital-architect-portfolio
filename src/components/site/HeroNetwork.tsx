@@ -1,138 +1,36 @@
 import { motion } from "framer-motion";
-import { Brain, Cloud, ShieldCheck } from "lucide-react";
+import type { SiteContent } from "@/data/siteContent";
 
-const nodes = [
-  { x: 12, y: 22, r: 2.5 },
-  { x: 30, y: 40, r: 3.2 },
-  { x: 48, y: 28, r: 2.3 },
-  { x: 68, y: 48, r: 3.6 },
-  { x: 86, y: 32, r: 2.5 },
-  { x: 18, y: 72, r: 2.4 },
-  { x: 44, y: 66, r: 3 },
-  { x: 78, y: 76, r: 2.8 },
-];
+const profileImage = "/assets/sagar-sharma.png";
 
-export function HeroNetwork() {
+export function HeroNetwork({ content: _content }: { content: SiteContent["hero"] }) {
   return (
-    <motion.div
+    <motion.figure
       initial={false}
       animate={{ opacity: 1, y: 0, rotate: 0 }}
       transition={{ duration: 1, delay: 0.25, ease: "easeOut" }}
-      whileHover={{ y: -8, rotate: 0.4 }}
-      className="relative h-[360px] w-full max-w-[calc(100vw-2rem)] overflow-hidden rounded-[8px] border border-border bg-white shadow-[0_32px_80px_oklch(0.18_0.01_260/0.10)] sm:h-[460px] sm:max-w-full lg:h-[520px]"
+      whileHover={{ y: -8, rotate: 0.2 }}
+      className="relative mx-auto h-[380px] w-full max-w-[calc(100vw-2rem)] overflow-hidden rounded-[28px] border border-white/70 bg-white shadow-[0_34px_90px_rgba(15,23,42,0.16)] sm:h-[480px] sm:max-w-full lg:h-[620px]"
     >
-      <div className="absolute inset-0 bg-[linear-gradient(oklch(0.18_0.01_260/0.055)_1px,transparent_1px),linear-gradient(90deg,oklch(0.18_0.01_260/0.055)_1px,transparent_1px)] bg-[size:28px_28px]" />
-      <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-[oklch(0.65_0.19_250/0.5)] to-transparent" />
+      <img
+        src={profileImage}
+        alt="Sagar Sharma, Chief Technology Officer"
+        className="h-full w-full object-cover object-center"
+        loading="eager"
+        decoding="async"
+      />
 
-      <div className="absolute left-4 right-4 top-5 flex items-center justify-between gap-4 text-[9px] uppercase tracking-[0.16em] text-muted-foreground sm:left-7 sm:right-7 sm:top-7 sm:text-[10px] sm:tracking-[0.22em]">
-        <span>Architecture Map</span>
-        <span>UAE to India</span>
-      </div>
+      <div className="pointer-events-none absolute inset-0 bg-[linear-gradient(180deg,rgba(15,23,42,0)_48%,rgba(15,23,42,0.38)_100%)]" />
+      <div className="pointer-events-none absolute inset-0 rounded-[28px] ring-1 ring-inset ring-white/35" />
 
-      <svg
-        viewBox="0 0 100 100"
-        preserveAspectRatio="none"
-        className="absolute inset-0 h-full w-full"
-      >
-        <defs>
-          <linearGradient id="hero-line" x1="0" x2="1" y1="0" y2="1">
-            <stop offset="0%" stopColor="oklch(0.65 0.19 250)" stopOpacity="0.18" />
-            <stop offset="50%" stopColor="oklch(0.65 0.19 250)" stopOpacity="0.7" />
-            <stop offset="100%" stopColor="oklch(0.18 0.01 260)" stopOpacity="0.2" />
-          </linearGradient>
-        </defs>
-
-        <motion.path
-          d="M12 58 C28 26 55 82 88 38"
-          fill="none"
-          stroke="url(#hero-line)"
-          strokeWidth="0.7"
-          strokeDasharray="2 2"
-          initial={{ pathLength: 0 }}
-          animate={{ pathLength: 1 }}
-          transition={{ duration: 1.8, delay: 0.7, ease: "easeOut" }}
-        />
-
-        {nodes.slice(0, -1).map((node, i) => (
-          <motion.line
-            key={`${node.x}-${node.y}`}
-            x1={node.x}
-            y1={node.y}
-            x2={nodes[i + 1].x}
-            y2={nodes[i + 1].y}
-            stroke="oklch(0.18 0.01 260)"
-            strokeOpacity={0.22}
-            strokeWidth={0.35}
-            initial={{ pathLength: 0 }}
-            animate={{ pathLength: 1 }}
-            transition={{ duration: 1.2, delay: 0.45 + i * 0.08, ease: "easeOut" }}
-          />
-        ))}
-
-        {nodes.map((n, i) => (
-          <g key={`n-${i}`}>
-            <motion.circle
-              cx={n.x}
-              cy={n.y}
-              r={n.r + 1.8}
-              fill="oklch(0.65 0.19 250)"
-              opacity="0.08"
-              className="pulse-node"
-            />
-            <motion.circle
-              cx={n.x}
-              cy={n.y}
-              r={n.r}
-              fill={i === 3 ? "oklch(0.65 0.19 250)" : "oklch(0.18 0.01 260)"}
-              initial={{ scale: 0, opacity: 0 }}
-              animate={{ scale: 1, opacity: i === 3 ? 0.9 : 0.78 }}
-              transition={{ duration: 0.55, delay: 0.35 + i * 0.07, ease: "easeOut" }}
-            />
-          </g>
-        ))}
-      </svg>
-
-      <motion.div
-        initial={false}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.8, delay: 0.65 }}
-        className="absolute bottom-4 left-4 right-4 rounded-[8px] border border-border bg-background/90 p-4 shadow-[0_20px_50px_oklch(0.18_0.01_260/0.08)] backdrop-blur sm:bottom-8 sm:left-8 sm:right-8 sm:p-5"
-      >
-        <div className="mb-4 flex items-center justify-between sm:mb-5">
-          <div className="font-display text-2xl leading-none sm:text-3xl">SS</div>
-          <div className="text-[9px] uppercase tracking-[0.16em] text-muted-foreground sm:text-[10px] sm:tracking-[0.18em]">
-            Secure scale
-          </div>
+      <figcaption className="absolute bottom-4 left-4 right-4 max-w-[calc(100%-2rem)] rounded-[22px] border border-white/45 bg-white/82 px-4 py-3 shadow-[0_18px_44px_rgba(15,23,42,0.18)] backdrop-blur-xl sm:bottom-6 sm:left-6 sm:right-auto sm:max-w-[280px] sm:px-5 sm:py-4">
+        <div className="text-base font-semibold leading-tight text-[#0F172A] sm:text-lg">
+          Sagar Sharma
         </div>
-        <div className="grid grid-cols-2 gap-2 sm:grid-cols-3 sm:gap-3">
-          {[
-            { label: "AI", icon: Brain },
-            { label: "Cloud", icon: Cloud },
-            { label: "Trust", icon: ShieldCheck },
-          ].map((item) => {
-            const Icon = item.icon;
-            return (
-              <div
-                key={item.label}
-                className="rounded-[8px] border border-border bg-white p-2.5 sm:p-3"
-              >
-                <Icon
-                  className="mb-2 h-4 w-4 text-[oklch(0.45_0.12_250)] sm:mb-3"
-                  strokeWidth={1.6}
-                />
-                <div className="text-xs font-medium leading-none">{item.label}</div>
-              </div>
-            );
-          })}
+        <div className="mt-1 text-xs font-medium uppercase tracking-[0.18em] text-slate-500">
+          Chief Technology Officer
         </div>
-      </motion.div>
-
-      <div className="absolute left-5 top-1/2 -translate-y-1/2 text-xs font-medium text-foreground sm:left-8">
-        UAE
-      </div>
-      <div className="absolute right-5 top-[38%] text-xs font-medium text-foreground sm:right-8">
-        India
-      </div>
-    </motion.div>
+      </figcaption>
+    </motion.figure>
   );
 }

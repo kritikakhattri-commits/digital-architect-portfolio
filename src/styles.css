@@ -173,11 +173,35 @@
     opacity: 1;
   }
 }
+@keyframes tech-route {
+  to {
+    stroke-dashoffset: -24;
+  }
+}
+@keyframes blueprint-pulse {
+  0%,
+  100% {
+    opacity: 0.08;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.18;
+    transform: scale(1.35);
+  }
+}
 .float-slow {
   animation: float-slow 12s ease-in-out infinite;
 }
 .pulse-node {
   animation: pulse-node 3s ease-in-out infinite;
+}
+.tech-route {
+  animation: tech-route 8s linear infinite;
+}
+.blueprint-pulse {
+  animation: blueprint-pulse 3.8s ease-in-out infinite;
+  transform-box: fill-box;
+  transform-origin: center;
 }
 
 @media (prefers-reduced-motion: reduce) {

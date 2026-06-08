@@ -1,13 +1,245 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
-import { ArrowUpRight, Mail, Globe } from "lucide-react";
+import {
+  ArrowUpRight,
+  Mail,
+  Globe,
+  Bot,
+  Building2,
+  Cloud,
+  Cpu,
+  Database,
+  Layers,
+  Lightbulb,
+  LockKeyhole,
+  Network,
+  Quote,
+  Scale,
+  ShieldCheck,
+  Target,
+  Users,
+  Zap,
+} from "lucide-react";
 import { Nav } from "@/components/site/Nav";
 import { HeroNetwork } from "@/components/site/HeroNetwork";
 import { Section } from "@/components/site/Section";
 import { Counter } from "@/components/site/Counter";
 import { Ecosystem } from "@/components/site/Ecosystem";
 import { FloatingAssistant } from "@/components/site/FloatingAssistant";
+import { useSiteContent } from "@/hooks/useSiteContent";
+import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from "@/components/ui/accordion";
+
+const technologyPhilosophy = [
+  {
+    title: "Systems Before Tools",
+    body: "Design systems that remain effective regardless of technology trends.",
+    icon: Layers,
+  },
+  {
+    title: "Security By Design",
+    body: "Security should be embedded from day one, not added later.",
+    icon: ShieldCheck,
+  },
+  {
+    title: "Automation Over Repetition",
+    body: "Remove manual effort wherever intelligent automation can improve outcomes.",
+    icon: Zap,
+  },
+  {
+    title: "Scalability First",
+    body: "Build foundations capable of supporting future growth.",
+    icon: Network,
+  },
+  {
+    title: "Data-Driven Decisions",
+    body: "Technology decisions should be guided by measurable outcomes.",
+    icon: Database,
+  },
+];
+
+const metricStories = [
+  {
+    metric: "10+",
+    label: "Years Experience",
+    body: "Building enterprise software, infrastructure, and technology ecosystems across multiple industries.",
+  },
+  {
+    metric: "50+",
+    label: "Enterprise Systems",
+    body: "Successfully delivered scalable technology solutions for business-critical operations.",
+  },
+  {
+    metric: "40%",
+    label: "Cost Reduction",
+    body: "Achieved through workflow automation, process optimization, and cloud efficiencies.",
+  },
+  {
+    metric: "5",
+    label: "Business Verticals",
+    body: "Unified under one technology strategy and operational framework.",
+  },
+  {
+    metric: "2",
+    label: "Countries Connected",
+    body: "Driving digital transformation across India and UAE operations.",
+  },
+];
+
+const leadershipStyle = [
+  {
+    title: "Vision",
+    body: "Define long-term technology direction aligned with business growth.",
+    icon: Target,
+    image: "/assets/leadership-vision.png",
+    imageAlt: "Strategic technology roadmap visual",
+  },
+  {
+    title: "Execution",
+    body: "Translate strategy into scalable systems, products, and infrastructure.",
+    icon: Cpu,
+    image: "/assets/leadership-execution.png",
+    imageAlt: "Scalable cloud infrastructure visual",
+  },
+  {
+    title: "Mentorship",
+    body: "Build high-performing teams through guidance, ownership, and continuous learning.",
+    icon: Users,
+    image: "/assets/leadership-mentorship.png",
+    imageAlt: "Technology leadership discussion visual",
+  },
+];
+
+const expertiseDomains = [
+  {
+    title: "AI & Automation",
+    items: ["Artificial Intelligence", "Intelligent Workflows", "Process Automation"],
+    icon: Bot,
+  },
+  {
+    title: "Cloud Infrastructure",
+    items: ["Multi-Region Architecture", "Cloud Platforms", "Infrastructure Scalability"],
+    icon: Cloud,
+  },
+  {
+    title: "Cybersecurity",
+    items: ["Security Architecture", "Risk Mitigation", "Compliance"],
+    icon: LockKeyhole,
+  },
+  {
+    title: "Enterprise Software",
+    items: ["ERP Systems", "CRM Platforms", "Business Applications"],
+    icon: Building2,
+  },
+  {
+    title: "Digital Transformation",
+    items: ["Process Modernization", "Enterprise Integration", "Strategic Technology Adoption"],
+    icon: Lightbulb,
+  },
+];
+
+const technologyChallenges = [
+  {
+    title: "Scaling High-Concurrency Platforms",
+    body: "Built systems capable of supporting large-scale digital operations.",
+    icon: Scale,
+  },
+  {
+    title: "Enterprise Cloud Migration",
+    body: "Transitioned business-critical infrastructure to scalable cloud environments.",
+    icon: Cloud,
+  },
+  {
+    title: "Security Architecture",
+    body: "Designed secure and resilient technology ecosystems.",
+    icon: ShieldCheck,
+  },
+  {
+    title: "Multi-Country Infrastructure",
+    body: "Connected operations across regions with reliable infrastructure.",
+    icon: Network,
+  },
+  {
+    title: "AI Integration",
+    body: "Implemented intelligent automation to improve operational efficiency.",
+    icon: Bot,
+  },
+];
+
+const executiveRecommendations = [
+  {
+    perspective: "Founder Perspective",
+    quote: "Technology leadership that consistently aligns innovation with business goals.",
+  },
+  {
+    perspective: "Operations Perspective",
+    quote: "Improved efficiency, visibility, and scalability across multiple divisions.",
+  },
+  {
+    perspective: "Engineering Perspective",
+    quote: "A leader who balances strategic thinking with technical excellence.",
+  },
+];
+
+const thoughtLeadershipArticles = [
+  "Why AI Will Transform Enterprise Operations",
+  "Building Scalable Systems For Global Markets",
+  "Security-First Architecture In Modern Enterprises",
+  "Cloud Infrastructure Beyond 2030",
+  "Automation As A Competitive Advantage",
+  "The Modern CTO Mindset",
+];
+
+const ctoFaq = [
+  {
+    question: "What does a CTO actually do?",
+    answer:
+      "A CTO defines technology strategy, aligns engineering decisions with business goals, protects technical standards, and ensures platforms can scale securely as the company grows.",
+  },
+  {
+    question: "How do you scale technology teams?",
+    answer:
+      "Scaling technology teams requires clear ownership, strong engineering standards, practical architecture, consistent delivery rituals, and mentorship that helps people make better decisions independently.",
+  },
+  {
+    question: "AI vs Automation: What is the difference?",
+    answer:
+      "Automation executes repeatable workflows with speed and consistency, while AI adds prediction, pattern recognition, and adaptive decision support to those workflows.",
+  },
+  {
+    question: "Why is cloud infrastructure important?",
+    answer:
+      "Cloud infrastructure gives enterprises elastic capacity, regional resilience, faster deployment cycles, and a stronger foundation for data, AI, security, and business continuity.",
+  },
+  {
+    question: "What are the biggest security priorities today?",
+    answer:
+      "Identity control, secure architecture, data protection, continuous monitoring, incident readiness, and security awareness across engineering and operations are the highest priorities.",
+  },
+  {
+    question: "How should businesses approach digital transformation?",
+    answer:
+      "Businesses should modernize around measurable outcomes, start with operational bottlenecks, improve data quality, integrate core systems, and adopt technology that compounds long-term value.",
+  },
+];
+
+const faqSchema = {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  mainEntity: ctoFaq.map((item) => ({
+    "@type": "Question",
+    name: item.question,
+    acceptedAnswer: {
+      "@type": "Answer",
+      text: item.answer,
+    },
+  })),
+};
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -29,139 +261,34 @@ export const Route = createFileRoute("/")({
   component: Home,
 });
 
-const metrics = [
-  { value: 10, suffix: "+", label: "Years experience" },
-  { value: 50, suffix: "+", label: "Enterprise systems delivered" },
-  { value: 40, suffix: "%", label: "Operational cost reduction" },
-  { value: 5, suffix: "", label: "Business verticals powered" },
-  { value: 2, suffix: "", label: "Countries connected" },
-];
-
-const architectedSystems = [
-  {
-    name: "SR18 Gaming Platform",
-    scope: "Global play infrastructure",
-    architecture: "AI engine · Cloud infrastructure · Security layers",
-    outcome: "A stable, scalable platform built for high-concurrency sessions and global growth.",
-  },
-  {
-    name: "SR18 Technologies Cloud System",
-    scope: "Enterprise cloud backbone",
-    architecture: "Multi-region cloud · Enterprise integrations · Observability",
-    outcome:
-      "A multi-layered cloud ecosystem powering business-critical systems across UAE and India.",
-  },
-  {
-    name: "Enterprise Automation Systems",
-    scope: "Operational intelligence layer",
-    architecture: "AI workflows · Process automation · Analytics",
-    outcome: "Automation and intelligent analytics that reduced operational cost by 40%.",
-  },
-];
-
-const responsibilityEvolution = [
-  {
-    stage: "Learning Systems",
-    period: "2012 – 2016",
-    role: "B.Tech in Computer Science Engineering",
-    org: "Delhi Technological University",
-    description:
-      "Built the technical foundation by learning software engineering, system design, and problem-solving principles.",
-  },
-  {
-    stage: "Building Systems",
-    period: "2016 – 2019",
-    role: "Senior Software Engineer",
-    org: "CodeSphere Technologies",
-    description:
-      "Designed backend systems, APIs, and high-performance applications used by growing businesses.",
-  },
-  {
-    stage: "Leading Teams",
-    period: "2019 – 2023",
-    role: "Head of Engineering",
-    org: "TechSol India Pvt Ltd",
-    description:
-      "Managed engineering teams, delivered enterprise products, and drove large-scale cloud and automation initiatives.",
-  },
-  {
-    stage: "Architecting Ecosystems",
-    period: "2023 – Present",
-    role: "Chief Technology Officer",
-    org: "SR18 Group",
-    description:
-      "Designed technology infrastructure across multiple business verticals including Gaming, Technology, Real Estate, Textile, and Beverages.",
-  },
-  {
-    stage: "Shaping Technology Strategy",
-    period: "Today",
-    description:
-      "Leading long-term technology vision focused on AI, cloud architecture, cybersecurity, automation, and scalable digital ecosystems.",
-  },
-];
-
-const leadershipFramework = [
-  {
-    title: "Precision",
-    body: "Every technology decision should create long-term value rather than short-term complexity. Building scalable systems begins with clarity, discipline, and attention to detail.",
-    x: 82,
-    y: 78,
-  },
-  {
-    title: "Security",
-    body: "Trust is infrastructure. Resilient systems, proactive protection, and strong governance create the foundation for sustainable growth.",
-    x: 18,
-    y: 78,
-  },
-  {
-    title: "Innovation",
-    body: "Technology should evolve alongside business needs. Innovation succeeds when it delivers measurable impact while remaining practical and human-centered.",
-    x: 50,
-    y: 14,
-  },
-];
-
-const futureEnterpriseStack = [
-  {
-    layer: "AI Intelligence",
-    explanation:
-      "Embedded intelligence across decision-making, customer experiences, analytics, and business operations.",
-  },
-  {
-    layer: "Automation Layer",
-    explanation:
-      "Workflow systems that reduce manual effort, increase speed, and create measurable operational efficiency.",
-  },
-  {
-    layer: "Cloud Infrastructure",
-    explanation:
-      "Scalable, multi-region infrastructure designed for reliability, performance, and enterprise growth.",
-  },
-  {
-    layer: "Cybersecurity",
-    explanation:
-      "Security-first architecture built around trust, governance, resilience, and proactive protection.",
-  },
-  {
-    layer: "Digital Foundations",
-    explanation:
-      "The core systems, data flows, APIs, and infrastructure that allow modern enterprises to scale.",
-  },
-];
-
 function Home() {
-  const [activeFramework, setActiveFramework] = useState(leadershipFramework[0].title);
+  const content = useSiteContent();
+  const leadershipFramework = content.leadership.nodes;
+  const futureEnterpriseStack = content.futureVision.layers;
+  const [activeFramework, setActiveFramework] = useState(leadershipFramework[0]?.title ?? "");
   const activePrinciple =
     leadershipFramework.find((principle) => principle.title === activeFramework) ??
     leadershipFramework[0];
-  const [activeFutureLayer, setActiveFutureLayer] = useState(futureEnterpriseStack[0].layer);
+  const [activeFutureLayer, setActiveFutureLayer] = useState(futureEnterpriseStack[0]?.title ?? "");
   const selectedFutureLayer =
-    futureEnterpriseStack.find((layer) => layer.layer === activeFutureLayer) ??
+    futureEnterpriseStack.find((layer) => layer.title === activeFutureLayer) ??
     futureEnterpriseStack[0];
+
+  useEffect(() => {
+    if (!leadershipFramework.some((principle) => principle.title === activeFramework)) {
+      setActiveFramework(leadershipFramework[0]?.title ?? "");
+    }
+  }, [activeFramework, leadershipFramework]);
+
+  useEffect(() => {
+    if (!futureEnterpriseStack.some((layer) => layer.title === activeFutureLayer)) {
+      setActiveFutureLayer(futureEnterpriseStack[0]?.title ?? "");
+    }
+  }, [activeFutureLayer, futureEnterpriseStack]);
 
   return (
     <div id="top" className="relative bg-background text-foreground overflow-x-hidden">
-      <Nav />
+      <Nav content={content.header} />
 
       {/* HERO */}
       <section className="relative pt-28 pb-16 sm:pt-32 md:min-h-screen md:pb-20">
@@ -175,9 +302,7 @@ function Home() {
               className="mb-6 flex items-start gap-3 text-[0.6rem] uppercase tracking-[0.12em] text-muted-foreground sm:mb-8 sm:items-center sm:text-xs sm:tracking-[0.22em]"
             >
               <span className="h-2 w-2 rounded-full bg-[oklch(0.65_0.19_250)] shadow-[0_0_0_4px_oklch(0.65_0.19_250/0.18)]" />
-              <span className="min-w-0 leading-relaxed">
-                SAGAR SHARMA · CHIEF TECHNOLOGY OFFICER
-              </span>
+              <span className="min-w-0 leading-relaxed">{content.hero.eyebrow}</span>
             </motion.div>
 
             <motion.div
@@ -186,9 +311,11 @@ function Home() {
               transition={{ duration: 0.9, delay: 0.08, ease: "easeOut" }}
               className="mb-5 font-display text-[clamp(2.35rem,13vw,8.8rem)] leading-[0.9] tracking-normal text-foreground sm:mb-6"
             >
-              Sagar
-              <br />
-              Sharma
+              {content.hero.displayName.split("\n").map((line) => (
+                <span key={line} className="block">
+                  {line}
+                </span>
+              ))}
             </motion.div>
 
             <motion.h1
@@ -198,15 +325,13 @@ function Home() {
               className="font-display max-w-3xl text-balance text-[clamp(1.45rem,6.8vw,3rem)] font-semibold leading-[1.08] tracking-normal md:text-5xl"
             >
               <span className="block sm:hidden">
-                Building
-                <br />
-                Future-Ready
-                <br />
-                Technology
-                <br />
-                Systems
+                {content.hero.mobileHeadline.split("\n").map((line) => (
+                  <span key={line} className="block">
+                    {line}
+                  </span>
+                ))}
               </span>
-              <span className="hidden sm:inline">Building Future-Ready Technology Systems</span>
+              <span className="hidden sm:inline">{content.hero.headline}</span>
             </motion.h1>
 
             <motion.p
@@ -216,16 +341,13 @@ function Home() {
               className="mt-5 max-w-2xl text-base leading-relaxed text-muted-foreground sm:text-lg md:mt-6 md:text-xl"
             >
               <span className="block sm:hidden">
-                AI, cloud infrastructure, cybersecurity,
-                <br />
-                and scalable digital architecture
-                <br />
-                for modern enterprises.
+                {content.hero.mobileSubheadline.split("\n").map((line) => (
+                  <span key={line} className="block">
+                    {line}
+                  </span>
+                ))}
               </span>
-              <span className="hidden sm:inline">
-                AI, cloud infrastructure, cybersecurity, and scalable digital architecture for
-                modern enterprises.
-              </span>
+              <span className="hidden sm:inline">{content.hero.subheadline}</span>
             </motion.p>
 
             <motion.p
@@ -235,16 +357,13 @@ function Home() {
               className="mt-5 max-w-xl border-l border-border pl-4 text-sm leading-relaxed text-foreground/72 sm:pl-5"
             >
               <span className="block sm:hidden">
-                Currently serving as CTO at SR18 Group,
-                <br />
-                leading technology strategy across
-                <br />
-                multiple business verticals.
+                {content.hero.mobileDescription.split("\n").map((line) => (
+                  <span key={line} className="block">
+                    {line}
+                  </span>
+                ))}
               </span>
-              <span className="hidden sm:inline">
-                Currently serving as CTO at SR18 Group, leading technology strategy across multiple
-                business verticals.
-              </span>
+              <span className="hidden sm:inline">{content.hero.description}</span>
             </motion.p>
 
             <motion.div
@@ -253,31 +372,69 @@ function Home() {
               transition={{ duration: 1, delay: 0.52 }}
               className="mt-8 flex w-full max-w-[calc(100vw-2rem)] flex-col gap-3 sm:max-w-none sm:flex-row sm:flex-wrap md:mt-10"
             >
-              <a
-                href="#journey"
-                className="group inline-flex min-h-11 w-full items-center justify-center gap-2 rounded-full bg-foreground px-6 py-3 text-sm font-medium text-background transition hover:-translate-y-0.5 hover:shadow-[0_14px_30px_oklch(0.18_0.01_260/0.14)] sm:w-auto"
-              >
-                Explore Profile
-                <ArrowUpRight className="h-4 w-4 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
-              </a>
-              <a
-                href="#vision"
-                className="inline-flex min-h-11 w-full items-center justify-center gap-2 whitespace-normal rounded-full border border-border bg-background/80 px-4 py-3 text-center text-xs font-medium leading-tight transition hover:-translate-y-0.5 hover:bg-muted hover:shadow-[0_14px_30px_oklch(0.18_0.01_260/0.08)] sm:w-auto sm:px-6 sm:text-sm"
-              >
-                View Technology Vision
-              </a>
+              {content.hero.ctas.map((cta, index) => (
+                <a
+                  key={`${cta.href}-${cta.label}`}
+                  href={cta.href}
+                  className={
+                    index === 0
+                      ? "group inline-flex min-h-11 w-full items-center justify-center gap-2 rounded-full bg-foreground px-6 py-3 text-sm font-medium text-background transition hover:-translate-y-0.5 hover:shadow-[0_14px_30px_oklch(0.18_0.01_260/0.14)] sm:w-auto"
+                      : "inline-flex min-h-11 w-full items-center justify-center gap-2 whitespace-normal rounded-full border border-border bg-background/80 px-4 py-3 text-center text-xs font-medium leading-tight transition hover:-translate-y-0.5 hover:bg-muted hover:shadow-[0_14px_30px_oklch(0.18_0.01_260/0.08)] sm:w-auto sm:px-6 sm:text-sm"
+                  }
+                >
+                  {cta.label}
+                  {index === 0 && (
+                    <ArrowUpRight className="h-4 w-4 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
+                  )}
+                </a>
+              ))}
             </motion.div>
           </div>
 
-          <HeroNetwork />
+          <HeroNetwork content={content.hero} />
         </div>
       </section>
+
+      {/* TECHNOLOGY PHILOSOPHY */}
+      <Section
+        eyebrow="Technology Philosophy"
+        title="Principles Behind Every System I Build"
+        intro="Every technology decision should create long-term business value, scalability, security, and operational excellence."
+        className="border-t border-border bg-white"
+      >
+        <div className="grid gap-4 md:grid-cols-5">
+          {technologyPhilosophy.map((principle, i) => {
+            const Icon = principle.icon;
+
+            return (
+              <motion.article
+                key={principle.title}
+                initial={{ opacity: 0, y: 22 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, margin: "-90px" }}
+                transition={{ duration: 0.62, delay: i * 0.06, ease: "easeOut" }}
+                className="group min-h-56 rounded-[8px] border border-border bg-white p-5 transition duration-300 hover:-translate-y-1 hover:border-foreground/28 hover:shadow-[0_22px_60px_oklch(0.18_0.01_260/0.08)]"
+              >
+                <div className="mb-9 flex h-10 w-10 items-center justify-center rounded-full border border-foreground/14 bg-secondary text-foreground transition duration-300 group-hover:border-foreground/32 group-hover:bg-foreground group-hover:text-background">
+                  <Icon className="h-4 w-4" aria-hidden="true" />
+                </div>
+                <h3 className="text-lg font-semibold leading-tight tracking-normal text-foreground">
+                  {principle.title}
+                </h3>
+                <p className="mt-4 text-sm leading-relaxed text-muted-foreground">
+                  {principle.body}
+                </p>
+              </motion.article>
+            );
+          })}
+        </div>
+      </Section>
 
       {/* METRICS */}
       <section className="border-y border-border bg-secondary/40">
         <div className="mx-auto max-w-6xl px-4 py-12 sm:px-6 sm:py-16 md:py-20">
           <div className="grid grid-cols-2 gap-x-4 gap-y-8 sm:gap-x-6 md:grid-cols-5 md:gap-y-10">
-            {metrics.map((m, i) => (
+            {content.metrics.map((m, i) => (
               <motion.div
                 key={m.label}
                 initial={{ opacity: 0, y: 20 }}
@@ -298,6 +455,34 @@ function Home() {
         </div>
       </section>
 
+      {/* BEHIND THE NUMBERS */}
+      <Section
+        eyebrow="Behind The Numbers"
+        title="The Impact Behind Every Metric"
+        className="border-b border-border bg-white"
+      >
+        <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-5">
+          {metricStories.map((story, i) => (
+            <motion.article
+              key={story.label}
+              initial={{ opacity: 0, y: 24 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, margin: "-100px" }}
+              transition={{ duration: 0.65, delay: i * 0.05, ease: "easeOut" }}
+              className="rounded-[8px] border border-border bg-white p-5 transition duration-300 hover:-translate-y-1 hover:border-foreground/24 hover:shadow-[0_18px_48px_oklch(0.18_0.01_260/0.07)]"
+            >
+              <div className="font-display text-4xl leading-none text-foreground">
+                {story.metric}
+              </div>
+              <h3 className="mt-5 text-base font-semibold leading-tight tracking-normal text-foreground">
+                {story.label}
+              </h3>
+              <p className="mt-4 text-sm leading-relaxed text-muted-foreground">{story.body}</p>
+            </motion.article>
+          ))}
+        </div>
+      </Section>
+
       {/* LEADERSHIP FRAMEWORK */}
       <section className="relative overflow-hidden border-y border-border bg-white py-20 sm:py-24 md:min-h-screen">
         <div className="mx-auto flex max-w-6xl flex-col justify-center px-4 sm:px-6 md:min-h-[calc(100vh-10rem)]">
@@ -309,7 +494,7 @@ function Home() {
               transition={{ duration: 0.8, ease: "easeOut" }}
               className="mb-5 text-[0.68rem] uppercase tracking-[0.18em] text-muted-foreground sm:text-xs sm:tracking-[0.24em]"
             >
-              Leadership Framework
+              {content.leadership.label}
             </motion.div>
 
             <motion.h2
@@ -319,7 +504,7 @@ function Home() {
               transition={{ duration: 1, delay: 0.08, ease: "easeOut" }}
               className="font-display text-balance text-[clamp(2.35rem,11vw,3.75rem)] font-semibold leading-[1.04] tracking-normal text-foreground md:text-6xl"
             >
-              How I Evaluate Every Technology Decision
+              {content.leadership.heading}
             </motion.h2>
 
             <motion.p
@@ -329,7 +514,7 @@ function Home() {
               transition={{ duration: 0.8, delay: 0.18, ease: "easeOut" }}
               className="mx-auto mt-5 max-w-2xl text-base leading-relaxed text-muted-foreground md:text-lg"
             >
-              A simple framework that guides every system, platform, and engineering decision.
+              {content.leadership.subheading}
             </motion.p>
           </div>
 
@@ -403,11 +588,11 @@ function Home() {
               >
                 <div>
                   <div className="text-[0.62rem] font-semibold uppercase leading-tight tracking-[0.18em] text-foreground md:text-xs">
-                    Sagar Sharma
+                    {content.leadership.centerName}
                   </div>
                   <div className="mx-auto mt-3 h-px w-8 bg-foreground/40" />
                   <div className="mt-3 px-3 text-[0.58rem] uppercase leading-snug tracking-[0.16em] text-muted-foreground md:text-[0.64rem]">
-                    Chief Technology Officer
+                    {content.leadership.centerRole}
                   </div>
                 </div>
               </motion.div>
@@ -477,7 +662,7 @@ function Home() {
             </div>
 
             <motion.div
-              key={activePrinciple.title}
+              key={activePrinciple?.title}
               initial={{ opacity: 0, y: 16 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.35, ease: "easeOut" }}
@@ -485,10 +670,10 @@ function Home() {
             >
               <div className="mb-5 h-px w-20 bg-foreground/70 max-md:mx-auto" />
               <h3 className="font-display text-3xl font-semibold tracking-normal text-foreground md:text-5xl">
-                {activePrinciple.title}
+                {activePrinciple?.title}
               </h3>
               <p className="mt-6 text-base leading-relaxed text-muted-foreground md:text-lg">
-                {activePrinciple.body}
+                {activePrinciple?.body}
               </p>
             </motion.div>
           </div>
@@ -506,21 +691,148 @@ function Home() {
                 {principle.title}
               </button>
             ))}
-            <span className="hidden md:block">Precision</span>
-            <span className="hidden md:block">Security</span>
-            <span className="hidden md:block">Innovation</span>
+            {leadershipFramework.slice(0, 3).map((principle) => (
+              <span key={`desktop-${principle.title}`} className="hidden md:block">
+                {principle.title}
+              </span>
+            ))}
           </div>
         </div>
       </section>
 
+      {/* LEADERSHIP STYLE */}
+      <Section
+        eyebrow="Strategic Leadership"
+        title="How I Lead Technology Teams"
+        className="overflow-x-hidden border-b border-border bg-white !py-16 sm:!py-24 md:!py-36"
+        headerClassName="!mb-10 sm:!mb-12 md:!mb-20"
+        titleClassName="!text-[2.15rem] min-[390px]:!text-[2.3rem] min-[430px]:!text-[2.45rem] md:!text-6xl"
+      >
+        <div className="grid gap-4 sm:gap-5 md:grid-cols-3">
+          {leadershipStyle.map((pillar, i) => {
+            const Icon = pillar.icon;
+
+            return (
+              <motion.article
+                key={pillar.title}
+                initial={{ opacity: 0, y: 24 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, margin: "-90px" }}
+                transition={{ duration: 0.7, delay: i * 0.08, ease: "easeOut" }}
+                className="group rounded-[8px] border border-border bg-white p-5 transition duration-300 hover:-translate-y-1 hover:border-foreground/28 hover:shadow-[0_22px_56px_oklch(0.18_0.01_260/0.08)] sm:p-6 md:min-h-72 md:p-7"
+              >
+                <div className="flex h-10 w-10 items-center justify-center rounded-full border border-foreground/14 bg-secondary transition duration-300 group-hover:bg-foreground group-hover:text-background sm:h-12 sm:w-12">
+                  <Icon className="h-4 w-4 sm:h-5 sm:w-5" aria-hidden="true" />
+                </div>
+                <img
+                  src={pillar.image}
+                  alt={pillar.imageAlt}
+                  loading="lazy"
+                  className="my-6 aspect-[16/10] w-full rounded-[6px] border border-border/80 object-cover shadow-[0_14px_36px_oklch(0.18_0.01_260/0.06)] sm:my-7 md:my-8"
+                />
+                <h3 className="font-display text-2xl font-semibold leading-tight tracking-normal text-foreground sm:text-3xl">
+                  {pillar.title}
+                </h3>
+                <p className="mt-4 text-[0.95rem] leading-7 text-muted-foreground sm:mt-5 sm:text-base sm:leading-relaxed">
+                  {pillar.body}
+                </p>
+              </motion.article>
+            );
+          })}
+        </div>
+      </Section>
+
       {/* ECOSYSTEM */}
       <Section
         id="ecosystem"
-        eyebrow="Technology Leadership"
-        title={<>The Technology Ecosystem I Lead</>}
-        intro="From AI-powered gaming infrastructure to enterprise cloud architecture, I oversee the technology systems, engineering teams, and digital transformation initiatives that power multiple business verticals across the SR18 Group."
+        eyebrow={content.ecosystem.label}
+        title={content.ecosystem.heading}
+        intro={content.ecosystem.description}
       >
-        <Ecosystem />
+        <Ecosystem content={content.ecosystem} />
+      </Section>
+
+      {/* TECHNOLOGY STACK & EXPERTISE */}
+      <Section
+        eyebrow="Core Expertise"
+        title="Technology Domains I Specialize In"
+        className="border-y border-border bg-white"
+      >
+        <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-5">
+          {expertiseDomains.map((domain, i) => {
+            const Icon = domain.icon;
+
+            return (
+              <motion.article
+                key={domain.title}
+                initial={{ opacity: 0, y: 22 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, margin: "-90px" }}
+                transition={{ duration: 0.62, delay: i * 0.05, ease: "easeOut" }}
+                className="group rounded-[8px] border border-border bg-white p-5 transition duration-300 hover:-translate-y-1 hover:border-foreground/28 hover:shadow-[0_22px_58px_oklch(0.18_0.01_260/0.08)]"
+              >
+                <div className="mb-8 flex h-10 w-10 items-center justify-center rounded-full border border-foreground/14 bg-secondary transition duration-300 group-hover:bg-foreground group-hover:text-background">
+                  <Icon className="h-4 w-4" aria-hidden="true" />
+                </div>
+                <h3 className="text-lg font-semibold leading-tight tracking-normal text-foreground">
+                  {domain.title}
+                </h3>
+                <ul className="mt-5 space-y-3">
+                  {domain.items.map((item) => (
+                    <li
+                      key={item}
+                      className="flex gap-3 text-sm leading-relaxed text-muted-foreground"
+                    >
+                      <span className="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-foreground/40" />
+                      <span>{item}</span>
+                    </li>
+                  ))}
+                </ul>
+              </motion.article>
+            );
+          })}
+        </div>
+      </Section>
+
+      {/* TECHNOLOGY CHALLENGES SOLVED */}
+      <Section
+        eyebrow="Problem Solving"
+        title="Technology Challenges Solved Across Industries"
+        className="bg-white"
+      >
+        <div className="grid gap-4 md:grid-cols-5">
+          {technologyChallenges.map((challenge, i) => {
+            const Icon = challenge.icon;
+
+            return (
+              <motion.article
+                key={challenge.title}
+                initial={{ opacity: 0, y: 24 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, margin: "-90px" }}
+                transition={{ duration: 0.65, delay: i * 0.06, ease: "easeOut" }}
+                className="group flex min-h-64 flex-col rounded-[8px] border border-border bg-white p-5 transition duration-300 hover:-translate-y-1 hover:border-foreground/28 hover:shadow-[0_22px_56px_oklch(0.18_0.01_260/0.08)]"
+              >
+                <div className="flex items-center justify-between gap-4">
+                  <div className="flex h-10 w-10 items-center justify-center rounded-full border border-foreground/14 bg-secondary transition duration-300 group-hover:bg-foreground group-hover:text-background">
+                    <Icon className="h-4 w-4" aria-hidden="true" />
+                  </div>
+                  <span className="text-xs tabular-nums text-muted-foreground">
+                    {String(i + 1).padStart(2, "0")}
+                  </span>
+                </div>
+                <div className="mt-auto pt-12">
+                  <h3 className="text-lg font-semibold leading-tight tracking-normal text-foreground">
+                    {challenge.title}
+                  </h3>
+                  <p className="mt-4 text-sm leading-relaxed text-muted-foreground">
+                    {challenge.body}
+                  </p>
+                </div>
+              </motion.article>
+            );
+          })}
+        </div>
       </Section>
 
       {/* SYSTEMS ARCHITECTED */}
@@ -534,20 +846,20 @@ function Home() {
             className="max-w-3xl"
           >
             <div className="text-xs uppercase tracking-[0.24em] text-muted-foreground">
-              Systems I've Architected
+              {content.projects.label}
             </div>
             <h2 className="font-display mt-5 text-balance text-[clamp(2.35rem,11vw,3.75rem)] font-semibold leading-[1.04] tracking-normal text-foreground md:mt-6 md:text-6xl">
-              Flagship Projects
+              {content.projects.heading}
             </h2>
             <p className="mt-5 max-w-2xl text-base leading-relaxed text-muted-foreground md:mt-6 md:text-lg">
-              Systems built across platforms, cloud infrastructure, and automation.
+              {content.projects.subheading}
             </p>
           </motion.div>
 
           <div className="mt-10 border-t border-foreground/18 md:mt-16">
-            {architectedSystems.map((system, i) => (
+            {content.projects.items.map((system, i) => (
               <motion.article
-                key={system.name}
+                key={system.title}
                 initial={{ opacity: 0.58, y: 18 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ amount: 0.44, margin: "-10% 0px -14% 0px" }}
@@ -558,19 +870,29 @@ function Home() {
                   <div className="text-sm tabular-nums text-muted-foreground">0{i + 1}</div>
                   <div>
                     <h3 className="font-display text-2xl font-semibold leading-tight tracking-normal text-foreground sm:text-3xl md:mt-8 md:text-4xl">
-                      {system.name}
+                      {system.title}
                     </h3>
                     <div className="mt-4 text-xs uppercase tracking-[0.18em] text-foreground/56">
-                      {system.scope}
+                      {system.role}
                     </div>
+                    {system.imageUrl && (
+                      <img
+                        src={system.imageUrl}
+                        alt=""
+                        className="mt-5 aspect-[16/9] w-full rounded-[8px] border border-border object-cover"
+                      />
+                    )}
                   </div>
                 </div>
 
                 <div className="text-sm leading-relaxed md:pt-12 md:text-base">
                   <div className="mb-3 text-[0.65rem] uppercase tracking-[0.18em] text-muted-foreground">
-                    Architecture
+                    Technology
                   </div>
-                  <p className="text-foreground/78">{system.architecture}</p>
+                  <p className="text-foreground/78">{system.technologyHighlights}</p>
+                  {system.description && (
+                    <p className="mt-4 text-foreground/62">{system.description}</p>
+                  )}
                 </div>
 
                 <div className="flex gap-4 text-sm leading-relaxed md:gap-6 md:pt-12 md:text-base">
@@ -588,12 +910,40 @@ function Home() {
         </div>
       </section>
 
+      {/* EXECUTIVE RECOMMENDATIONS */}
+      <Section
+        eyebrow="Recommendations"
+        title="Trusted By Leaders And Teams"
+        className="border-b border-border bg-white"
+      >
+        <div className="grid gap-5 md:grid-cols-3">
+          {executiveRecommendations.map((recommendation, i) => (
+            <motion.article
+              key={recommendation.perspective}
+              initial={{ opacity: 0, y: 24 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, margin: "-90px" }}
+              transition={{ duration: 0.68, delay: i * 0.08, ease: "easeOut" }}
+              className="rounded-[8px] border border-border bg-white p-7 transition duration-300 hover:-translate-y-1 hover:border-foreground/24 hover:shadow-[0_20px_54px_oklch(0.18_0.01_260/0.08)]"
+            >
+              <Quote className="h-7 w-7 text-foreground/28" aria-hidden="true" />
+              <p className="mt-10 text-xl font-medium leading-snug tracking-normal text-foreground">
+                {recommendation.quote}
+              </p>
+              <div className="mt-8 border-t border-border pt-5 text-xs uppercase tracking-[0.18em] text-muted-foreground">
+                {recommendation.perspective}
+              </div>
+            </motion.article>
+          ))}
+        </div>
+      </Section>
+
       {/* JOURNEY */}
       <Section
         id="journey"
-        eyebrow="Career Journey"
-        title={<>A Decade of Building, Leading, Shipping.</>}
-        intro="The progression from writing code to leading technology strategy across industries."
+        eyebrow={content.journey.label}
+        title={content.journey.heading}
+        intro={content.journey.subheading}
         className="border-y border-border bg-white"
       >
         <div className="relative">
@@ -608,7 +958,7 @@ function Home() {
           </div>
 
           <div className="border-t border-foreground/14">
-            {responsibilityEvolution.map((stage, i) => (
+            {content.journey.stages.map((stage, i) => (
               <motion.article
                 key={stage.stage}
                 initial={{ opacity: 0, y: 24 }}
@@ -658,11 +1008,45 @@ function Home() {
         </div>
       </Section>
 
+      {/* THOUGHT LEADERSHIP */}
+      <Section
+        eyebrow="Insights"
+        title="Perspectives On The Future Of Technology"
+        className="border-b border-border bg-white"
+      >
+        <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+          {thoughtLeadershipArticles.map((article, i) => (
+            <motion.article
+              key={article}
+              initial={{ opacity: 0, y: 22 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, margin: "-90px" }}
+              transition={{ duration: 0.64, delay: i * 0.05, ease: "easeOut" }}
+              className="group flex min-h-64 flex-col rounded-[8px] border border-border bg-white p-6 transition duration-300 hover:-translate-y-1 hover:border-foreground/26 hover:shadow-[0_20px_54px_oklch(0.18_0.01_260/0.08)]"
+            >
+              <div className="flex items-center justify-between gap-4">
+                <span className="text-xs uppercase tracking-[0.18em] text-muted-foreground">
+                  Article
+                </span>
+                <ArrowUpRight className="h-4 w-4 text-foreground/34 transition duration-300 group-hover:-translate-y-0.5 group-hover:translate-x-0.5 group-hover:text-foreground" />
+              </div>
+              <h3 className="mt-auto font-display text-3xl font-semibold leading-tight tracking-normal text-foreground">
+                {article}
+              </h3>
+              <div className="mt-6 border-t border-border pt-4 text-xs tabular-nums text-muted-foreground">
+                {String(i + 1).padStart(2, "0")}
+              </div>
+            </motion.article>
+          ))}
+        </div>
+      </Section>
+
       {/* VISION */}
       <Section
         id="vision"
-        eyebrow="Future Vision"
-        title={<>Engineering the next generation of intelligent enterprises.</>}
+        eyebrow={content.futureVision.label}
+        title={content.futureVision.heading}
+        intro={content.futureVision.subheading}
         className="bg-white"
       >
         <div className="grid items-start gap-10 md:gap-14 lg:grid-cols-[0.58fr_0.42fr] lg:gap-20">
@@ -676,26 +1060,26 @@ function Home() {
             >
               <div>
                 <div className="text-[0.68rem] uppercase tracking-[0.18em] text-muted-foreground sm:text-xs sm:tracking-[0.22em]">
-                  Blueprint
+                  {content.futureVision.blueprintLabel}
                 </div>
                 <h3 className="mt-3 text-2xl font-semibold tracking-normal text-foreground md:text-3xl">
-                  The Future Enterprise Stack
+                  {content.futureVision.stackHeading}
                 </h3>
               </div>
               <div className="hidden text-right text-xs uppercase tracking-[0.18em] text-muted-foreground sm:block">
-                05 Layers
+                {String(futureEnterpriseStack.length).padStart(2, "0")} Layers
               </div>
             </motion.div>
 
             <div className="relative mx-auto max-w-3xl">
               <div className="space-y-2.5 md:space-y-3">
                 {futureEnterpriseStack.map((layer, i) => {
-                  const isActive = activeFutureLayer === layer.layer;
+                  const isActive = activeFutureLayer === layer.title;
                   const width = 58 + (futureEnterpriseStack.length - i - 1) * 9;
 
                   return (
                     <motion.button
-                      key={layer.layer}
+                      key={layer.title}
                       type="button"
                       initial={{ opacity: 0, y: 18 }}
                       whileInView={{ opacity: 1, y: 0 }}
@@ -705,9 +1089,9 @@ function Home() {
                         delay: (futureEnterpriseStack.length - i - 1) * 0.08,
                         ease: "easeOut",
                       }}
-                      onMouseEnter={() => setActiveFutureLayer(layer.layer)}
-                      onFocus={() => setActiveFutureLayer(layer.layer)}
-                      onClick={() => setActiveFutureLayer(layer.layer)}
+                      onMouseEnter={() => setActiveFutureLayer(layer.title)}
+                      onFocus={() => setActiveFutureLayer(layer.title)}
+                      onClick={() => setActiveFutureLayer(layer.title)}
                       className={`relative mx-auto flex min-h-16 w-full items-center justify-between gap-4 border-y px-4 py-4 text-left transition duration-300 max-md:!max-w-full md:px-7 ${
                         isActive
                           ? "border-foreground text-foreground opacity-100"
@@ -719,7 +1103,7 @@ function Home() {
                         {String(i + 1).padStart(2, "0")}
                       </span>
                       <span className="text-right text-base font-semibold tracking-normal sm:text-lg md:text-2xl">
-                        {layer.layer}
+                        {layer.title}
                       </span>
                     </motion.button>
                   );
@@ -736,30 +1120,60 @@ function Home() {
             className="border-t border-foreground/18 pt-7 lg:mt-20"
           >
             <div className="text-xs uppercase tracking-[0.22em] text-muted-foreground">
-              Vision 2030
+              {content.futureVision.visionLabel}
             </div>
             <p className="mt-5 text-lg font-medium leading-snug text-foreground sm:text-xl md:text-2xl">
-              Building intelligent, secure, and borderless technology ecosystems that connect UAE,
-              India, and global markets through AI, automation, cloud infrastructure, cybersecurity,
-              and enterprise innovation.
+              {content.futureVision.vision2030}
             </p>
 
             <motion.div
-              key={selectedFutureLayer.layer}
+              key={selectedFutureLayer?.title}
               initial={{ opacity: 0, y: 10 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.32, ease: "easeOut" }}
               className="mt-8 border-t border-foreground/14 pt-6 md:mt-10 md:pt-7"
             >
               <div className="text-lg font-semibold tracking-normal text-foreground">
-                {selectedFutureLayer.layer}
+                {selectedFutureLayer?.title}
               </div>
               <p className="mt-4 text-base leading-relaxed text-muted-foreground">
-                {selectedFutureLayer.explanation}
+                {selectedFutureLayer?.description}
               </p>
             </motion.div>
           </motion.div>
         </div>
+      </Section>
+
+      {/* ASK THE CTO KNOWLEDGE HUB */}
+      <Section
+        eyebrow="Knowledge Hub"
+        title="Ask The CTO"
+        className="border-t border-border bg-white"
+      >
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }}
+        />
+        <motion.div
+          initial={{ opacity: 0, y: 22 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: "-90px" }}
+          transition={{ duration: 0.7, ease: "easeOut" }}
+          className="mx-auto max-w-4xl rounded-[8px] border border-border bg-white px-5 py-2 shadow-[0_18px_50px_oklch(0.18_0.01_260/0.05)] sm:px-7"
+        >
+          <Accordion type="single" collapsible defaultValue={ctoFaq[0]?.question}>
+            {ctoFaq.map((item) => (
+              <AccordionItem key={item.question} value={item.question} className="border-border">
+                <AccordionTrigger className="min-h-16 py-5 text-left text-base font-semibold leading-snug tracking-normal text-foreground hover:no-underline md:text-lg">
+                  {item.question}
+                </AccordionTrigger>
+                <AccordionContent className="pb-6 text-base leading-relaxed text-muted-foreground">
+                  {item.answer}
+                </AccordionContent>
+              </AccordionItem>
+            ))}
+          </Accordion>
+        </motion.div>
       </Section>
 
       {/* CONTACT */}
@@ -772,9 +1186,20 @@ function Home() {
             transition={{ duration: 0.8 }}
             className="font-display text-balance text-[clamp(2.65rem,13vw,4.5rem)] leading-[1.05] md:text-7xl"
           >
-            Let's build the <span className="italic text-[oklch(0.45_0.12_250)]">future</span>{" "}
-            together.
+            {content.contact.heading.split(content.contact.highlightedWord)[0]}
+            <span className="italic text-[oklch(0.45_0.12_250)]">
+              {content.contact.highlightedWord}
+            </span>
+            {content.contact.heading
+              .split(content.contact.highlightedWord)
+              .slice(1)
+              .join(content.contact.highlightedWord)}
           </motion.h2>
+          {content.contact.description && (
+            <p className="mx-auto mt-6 max-w-2xl text-base leading-relaxed text-muted-foreground md:text-lg">
+              {content.contact.description}
+            </p>
+          )}
 
           <motion.div
             initial={{ opacity: 0, y: 16 }}
@@ -784,33 +1209,59 @@ function Home() {
             className="mt-10 flex flex-col items-stretch justify-center gap-3 sm:mt-12 sm:flex-row sm:items-center"
           >
             <a
-              href="mailto:sagar.sharma@sr18group.com"
+              href={`mailto:${content.contact.email}`}
               className="group inline-flex min-h-11 items-center justify-center gap-2 rounded-full bg-foreground px-5 py-3 text-sm font-medium text-background transition hover:opacity-90 sm:px-6"
             >
               <Mail className="w-4 h-4" />
-              sagar.sharma@sr18group.com
+              {content.contact.email}
             </a>
             <a
-              href="https://www.sr18group.com"
+              href={`https://${content.contact.website.replace(/^https?:\/\//, "")}`}
               target="_blank"
               rel="noreferrer"
               className="hairline inline-flex min-h-11 items-center justify-center gap-2 rounded-full bg-background px-5 py-3 text-sm font-medium transition hover:bg-muted sm:px-6"
             >
               <Globe className="w-4 h-4" />
-              www.sr18group.com
+              {content.contact.website}
             </a>
+            {content.contact.linkedIn && (
+              <a
+                href={content.contact.linkedIn}
+                target="_blank"
+                rel="noreferrer"
+                className="hairline inline-flex min-h-11 items-center justify-center rounded-full bg-background px-5 py-3 text-sm font-medium transition hover:bg-muted sm:px-6"
+              >
+                LinkedIn
+              </a>
+            )}
           </motion.div>
         </div>
       </section>
 
       <footer className="border-t border-border">
-        <div className="mx-auto flex max-w-6xl flex-col items-center justify-between gap-3 px-4 py-8 text-center text-xs text-muted-foreground sm:px-6 md:flex-row md:gap-4 md:py-10 md:text-left">
-          <div>Sagar Sharma — CTO, SR18 Universe</div>
-          <div>© {new Date().getFullYear()} · Dubai, UAE</div>
+        <div className="mx-auto flex max-w-6xl flex-col items-center justify-between gap-4 px-4 py-8 text-center text-xs text-muted-foreground sm:px-6 md:flex-row md:py-10 md:text-left">
+          <div>
+            <div className="font-medium text-foreground">{content.footer.name}</div>
+            <div className="mt-1">{content.footer.description}</div>
+          </div>
+          <div className="flex flex-wrap items-center justify-center gap-4">
+            {content.footer.links.map((link) => (
+              <a
+                key={`${link.href}-${link.label}`}
+                href={link.href}
+                className="hover:text-foreground"
+              >
+                {link.label}
+              </a>
+            ))}
+          </div>
+          <div>
+            © {new Date().getFullYear()} · {content.footer.copyrightText}
+          </div>
         </div>
       </footer>
 
-      <FloatingAssistant />
+      <FloatingAssistant content={content.assistant} />
     </div>
   );
 }

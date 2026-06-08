@@ -8,6 +8,8 @@ export function Section({
   intro,
   children,
   className = "",
+  headerClassName = "",
+  titleClassName = "",
 }: {
   id?: string;
   eyebrow?: string;
@@ -15,6 +17,8 @@ export function Section({
   intro?: ReactNode;
   children: ReactNode;
   className?: string;
+  headerClassName?: string;
+  titleClassName?: string;
 }) {
   return (
     <section id={id} className={`relative py-20 sm:py-24 md:py-36 ${className}`}>
@@ -25,7 +29,7 @@ export function Section({
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, margin: "-100px" }}
             transition={{ duration: 0.7, ease: "easeOut" }}
-            className="mb-12 max-w-3xl md:mb-20"
+            className={`mb-12 max-w-3xl md:mb-20 ${headerClassName}`}
           >
             {eyebrow && (
               <div className="mb-5 flex items-center gap-3 text-[0.68rem] uppercase tracking-[0.18em] text-muted-foreground sm:mb-6 sm:text-xs sm:tracking-[0.2em]">
@@ -34,7 +38,9 @@ export function Section({
               </div>
             )}
             {title && (
-              <h2 className="font-display text-balance text-[clamp(2.35rem,11vw,3.75rem)] leading-[1.04] md:text-6xl">
+              <h2
+                className={`font-display text-balance text-[clamp(2.35rem,11vw,3.75rem)] leading-[1.04] md:text-6xl ${titleClassName}`}
+              >
                 {title}
               </h2>
             )}

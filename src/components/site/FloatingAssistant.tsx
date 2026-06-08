@@ -1,128 +1,37 @@
 import { AnimatePresence, motion } from "framer-motion";
 import { Send, X } from "lucide-react";
 import { FormEvent, useMemo, useState } from "react";
-
-const suggestedQuestions = [
-  "Who is Sagar Sharma?",
-  "What is his role at SR18?",
-  "What systems has he architected?",
-  "What is his leadership philosophy?",
-  "What are his core technology skills?",
-  "What certifications does he hold?",
-  "What is his future vision?",
-  "How can I contact him?",
-];
-
-const knowledgeBase = {
-  name: "Sagar Sharma",
-  title: "Chief Technology Officer, SR18 Group",
-  location: "Dubai, UAE",
-  headline: "Technology Leader | AI & Cloud Architect | Building Future-Ready Digital Ecosystems",
-  bio: "Sagar Sharma is an experienced technology strategist with 10+ years in software engineering, cloud architecture, cybersecurity, and scalable digital infrastructure. He began as a developer in India, building backend systems and solving complex technical problems. His work expanded into AI, automation, enterprise architecture, and digital transformation.",
-  mission:
-    "To build technology that does not just work, but evolves, adapts, and leads industries into the future.",
-  philosophy: "Innovation must be reliable, secure, and human-driven.",
-  achievements: [
-    "Built SR18 Gaming's next-generation AI gaming engine",
-    "Architected SR18 Technologies' cloud infrastructure across UAE and India",
-    "Implemented enterprise-level cybersecurity models",
-    "Created automated systems that reduced operational costs by 40%",
-    "Led multiple cross-border tech teams",
-    "Delivered 50+ enterprise technology systems",
-  ],
-  experience: [
-    "CTO, SR18 Group, 2023-Present, Dubai UAE",
-    "Head of Engineering, TechSol India Pvt Ltd, 2019-2023",
-    "Senior Software Engineer, CodeSphere Technologies, 2016-2019",
-  ],
-  education: "B.Tech in Computer Science Engineering, Delhi Technological University, 2012-2016",
-  certifications: [
-    "AWS Certified Solutions Architect",
-    "Google Cloud Professional Architect",
-    "Certified Ethical Hacker",
-    "Machine Learning, Stanford Online",
-  ],
-  skills: [
-    "Cloud Architecture",
-    "AI & ML",
-    "Cybersecurity",
-    "Backend Engineering",
-    "DevOps",
-    "Data Engineering",
-    "Scalable Systems Design",
-    "API Architecture",
-    "Product Strategy",
-    "Technical Leadership",
-    "Software Development",
-    "Project Management",
-    "System Optimization",
-    "Blockchain/Web3 basics",
-    "Team Leadership",
-  ],
-  projects: [
-    "SR18 Gaming Platform: Chief Architect for an AI engine, cloud infrastructure, and security layers. Result: stable scalable platform built for global usage.",
-    "SR18 Technologies Cloud System: Lead Architect for a multi-layered cloud ecosystem for enterprise clients across UAE and India.",
-    "Enterprise Automation Systems: reduced operational costs by 40% through automation and analytics.",
-  ],
-  contact: "Email: sagar.sharma@sr18group.com. Website: www.sr18group.com.",
-};
+import type { SiteContent } from "@/data/siteContent";
 
 function includesAny(value: string, terms: string[]) {
   return terms.some((term) => value.includes(term));
 }
 
-function getAssistantResponse(question: string) {
+function getAssistantResponse(question: string, content: SiteContent["assistant"]) {
   const q = question.toLowerCase();
+  const answer = content.knowledgeBaseAnswers.find((entry) =>
+    includesAny(
+      q,
+      entry.keywords
+        .split(",")
+        .map((keyword) => keyword.trim().toLowerCase())
+        .filter(Boolean),
+    ),
+  );
 
-  if (includesAny(q, ["contact", "email", "reach", "website", "connect"])) {
-    return `You can contact Sagar Sharma at ${knowledgeBase.contact}`;
-  }
-
-  if (includesAny(q, ["who", "profile", "bio", "about", "sagar"])) {
-    return `${knowledgeBase.name} is ${knowledgeBase.title}, based in ${knowledgeBase.location}. ${knowledgeBase.bio}`;
-  }
-
-  if (includesAny(q, ["sr18", "role", "cto", "current"])) {
-    return `Sagar Sharma serves as ${knowledgeBase.title} in ${knowledgeBase.location}, leading technology strategy, AI, cloud infrastructure, cybersecurity, automation, and scalable digital ecosystems.`;
-  }
-
-  if (includesAny(q, ["system", "project", "architect", "built", "platform"])) {
-    return knowledgeBase.projects.join(" ");
-  }
-
-  if (includesAny(q, ["philosophy", "leadership", "principle", "mission"])) {
-    return `${knowledgeBase.philosophy} His mission is ${knowledgeBase.mission}`;
-  }
-
-  if (includesAny(q, ["skill", "technology", "tech stack", "expertise", "capability"])) {
-    return `Sagar's core skills include ${knowledgeBase.skills.join(", ")}.`;
-  }
-
-  if (includesAny(q, ["certification", "certified", "certificate"])) {
-    return `His certifications include ${knowledgeBase.certifications.join(", ")}.`;
-  }
-
-  if (includesAny(q, ["future", "vision", "2030"])) {
-    return "Sagar's future vision is to build intelligent, secure, and borderless technology ecosystems that connect UAE, India, and global markets through AI, automation, cloud infrastructure, cybersecurity, and enterprise innovation.";
-  }
-
-  if (includesAny(q, ["experience", "career", "journey", "work", "education"])) {
-    return `Experience: ${knowledgeBase.experience.join("; ")}. Education: ${knowledgeBase.education}.`;
-  }
-
-  if (includesAny(q, ["achievement", "impact", "result", "accomplishment"])) {
-    return `Key achievements include: ${knowledgeBase.achievements.join("; ")}.`;
-  }
-
-  return "I can only answer questions related to Sagar Sharma's professional profile, projects, leadership, and contact information.";
+  return answer?.answer ?? content.fallbackResponse;
 }
 
-export function FloatingAssistant() {
+export function FloatingAssistant({ content }: { content: SiteContent["assistant"] }) {
+  const suggestedQuestions = content.suggestedQuestions;
   const [isOpen, setIsOpen] = useState(false);
   const [question, setQuestion] = useState("");
-  const [activeQuestion, setActiveQuestion] = useState(suggestedQuestions[0]);
+  const [activeQuestion, setActiveQuestion] = useState(suggestedQuestions[0] ?? "");
 
-  const response = useMemo(() => getAssistantResponse(activeQuestion), [activeQuestion]);
+  const response = useMemo(
+    () => getAssistantResponse(activeQuestion, content),
+    [activeQuestion, content],
+  );
 
   function ask(nextQuestion: string) {
     const trimmed = nextQuestion.trim();
@@ -153,11 +62,10 @@ export function FloatingAssistant() {
               <div className="flex items-start justify-between gap-5">
                 <div>
                   <div className="text-base font-semibold tracking-normal text-foreground sm:text-lg">
-                    Ask Sagar's Assistant
+                    {content.title}
                   </div>
                   <p className="mt-2 max-w-md text-sm leading-relaxed text-muted-foreground">
-                    Explore Sagar Sharma's experience, technology leadership, projects, and future
-                    vision.
+                    {content.subtitle}
                   </p>
                 </div>
                 <button
@@ -212,7 +120,7 @@ export function FloatingAssistant() {
                 <input
                   value={question}
                   onChange={(event) => setQuestion(event.target.value)}
-                  placeholder="Ask about Sagar's profile, work, or vision"
+                  placeholder={content.placeholder}
                   className="min-h-11 min-w-0 flex-1 rounded-full border border-border bg-white px-4 py-3 text-base text-foreground outline-none transition placeholder:text-muted-foreground focus:border-foreground/45 sm:text-sm"
                 />
                 <button
@@ -235,7 +143,7 @@ export function FloatingAssistant() {
         className="min-h-11 rounded-full border border-foreground bg-foreground px-5 py-3 text-sm font-medium text-background shadow-[0_16px_42px_oklch(0.18_0.01_260/0.18)] transition hover:-translate-y-0.5 hover:shadow-[0_22px_54px_oklch(0.18_0.01_260/0.22)]"
         aria-expanded={isOpen}
       >
-        Ask the CTO
+        {content.buttonText}
       </motion.button>
     </div>
   );

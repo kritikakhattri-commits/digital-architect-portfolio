@@ -1,53 +1,12 @@
 import { motion } from "framer-motion";
 import { useState } from "react";
-
-const verticals = [
-  {
-    key: "gaming",
-    label: "SR18 Gaming",
-    angle: -90,
-    summary: "AI Platforms • Security Systems",
-    detail:
-      "Gaming infrastructure, intelligent platform services, player security, and resilient scale.",
-  },
-  {
-    key: "tech",
-    label: "SR18 Technologies",
-    angle: -18,
-    summary: "Cloud Infrastructure • Enterprise Software",
-    detail:
-      "Cloud-native architecture, internal platforms, enterprise integrations, and automation.",
-  },
-  {
-    key: "realestate",
-    label: "SR18 Real Estate",
-    angle: 54,
-    summary: "Digital Operations • Automation",
-    detail:
-      "Operational systems, workflow automation, CRM foundations, and digital process control.",
-  },
-  {
-    key: "textile",
-    label: "SR18 Textile",
-    angle: 126,
-    summary: "Supply Chain Systems • Analytics",
-    detail:
-      "Supply chain visibility, analytics layers, operational data flows, and reporting systems.",
-  },
-  {
-    key: "beverages",
-    label: "SR18 Beverages",
-    angle: 198,
-    summary: "Distribution Technology • Business Intelligence",
-    detail:
-      "Distribution technology, commercial intelligence, business dashboards, and decision systems.",
-  },
-];
+import type { SiteContent } from "@/data/siteContent";
 
 const R = 38;
 
-export function Ecosystem() {
-  const [active, setActive] = useState<string | null>(verticals[0].key);
+export function Ecosystem({ content }: { content: SiteContent["ecosystem"] }) {
+  const verticals = content.nodes;
+  const [active, setActive] = useState<string | null>(verticals[0]?.key ?? null);
   const activeVertical = verticals.find((vertical) => vertical.key === active) ?? verticals[0];
 
   return (
@@ -99,10 +58,10 @@ export function Ecosystem() {
 
       <div className="mt-5 rounded-[8px] border border-border bg-white p-4 md:hidden">
         <div className="text-[0.68rem] font-semibold uppercase tracking-[0.18em] text-muted-foreground">
-          Active Vertical
+          {content.activeLabel}
         </div>
         <div className="mt-2 text-lg font-semibold tracking-normal text-foreground">
-          {activeVertical.label}
+          {activeVertical?.label}
         </div>
       </div>
 
@@ -142,23 +101,22 @@ export function Ecosystem() {
           <div className="absolute inset-0 rounded-full bg-[oklch(0.65_0.19_250/0.08)] blur-xl pulse-node" />
           <div className="relative min-h-48 w-48 rounded-full border border-border bg-white px-7 py-8 text-center shadow-[0_24px_70px_oklch(0.18_0.01_260/0.10)] sm:min-h-56 sm:w-56">
             <div className="text-[11px] font-semibold uppercase tracking-[0.18em] text-foreground">
-              Sagar Sharma
+              {content.centerName}
             </div>
-            <div className="mt-2 text-xs text-muted-foreground">Chief Technology Officer</div>
+            <div className="mt-2 text-xs text-muted-foreground">{content.centerRole}</div>
             <div className="mx-auto my-5 h-px w-14 bg-border" />
             <div className="space-y-3 text-xs text-foreground/80">
-              <div>
-                <div className="font-display text-2xl leading-none">10+</div>
-                <div className="mt-1 text-[10px] uppercase tracking-[0.16em] text-muted-foreground">
-                  Years Experience
+              {content.centerMetrics.slice(0, 2).map((metric) => (
+                <div key={metric.label}>
+                  <div className="font-display text-2xl leading-none">
+                    {metric.value}
+                    {metric.suffix}
+                  </div>
+                  <div className="mt-1 text-[10px] uppercase tracking-[0.16em] text-muted-foreground">
+                    {metric.label}
+                  </div>
                 </div>
-              </div>
-              <div>
-                <div className="font-display text-2xl leading-none">50+</div>
-                <div className="mt-1 text-[10px] uppercase tracking-[0.16em] text-muted-foreground">
-                  Enterprise Systems Delivered
-                </div>
-              </div>
+              ))}
             </div>
           </div>
         </motion.div>
